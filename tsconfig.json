@@ -27,6 +27,7 @@
       "@components/*": ["./components/*"],
       "@lib/*": ["./lib/*"],
       "@pages/*": ["./pages/*"],
+      "@router/*": ["./router/*"],
       "@store/*": ["./store/*"],
       "@styles/*": ["./styles/*"],
       "@types/*": ["./types/*"],
