@@ -7,15 +7,17 @@ import { ResumePage } from "@pages/resume";
 
 import { App } from "@/App";
 
+import { PATH } from "./path";
+
 export const router = createBrowserRouter([
   {
-    path: "/",
+    path: PATH.HOME.INDEX,
     element: <App />,
     children: [
       { index: true, element: <HomePage /> },
-      { path: "blog", element: <BlogPage /> },
-      { path: "resume", element: <ResumePage /> },
-      { path: "portfolio", element: <PortfolioPage /> },
+      { path: PATH.BLOG.INDEX, element: <BlogPage /> },
+      { path: PATH.RESUME.INDEX, element: <ResumePage /> },
+      { path: PATH.PORTFOLIO.INDEX, element: <PortfolioPage /> },
     ],
   },
   { path: "*", element: <div>404 page not found</div> },
