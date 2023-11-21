@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import DogPawImage from "@assets/dog-paw.png";
 
@@ -8,6 +8,9 @@ import { GNBMenuText } from "./components";
 
 export const GNB = () => {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  const location = pathname.substring(1);
 
   return (
     <>
@@ -27,9 +30,9 @@ export const GNB = () => {
           onClick={() => navigate("/")}
         />
         <FlexDiv gap={1}>
-          <GNBMenuText menu="blog" path="blog" />
-          <GNBMenuText menu="resume" path="resume" />
-          <GNBMenuText menu="portfolio" path="portfolio" />
+          <GNBMenuText menu="blog" path="blog" location={location} />
+          <GNBMenuText menu="resume" path="resume" location={location} />
+          <GNBMenuText menu="portfolio" path="portfolio" location={location} />
         </FlexDiv>
       </FlexDiv>
       <div style={{ height: "5rem" }}></div>
