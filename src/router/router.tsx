@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 
-import { BlogPage } from "@pages/blog";
+import { BlogPage, BlogPostDetail, BlogPostList } from "@features/blog";
+
 import { HomePage } from "@pages/home";
 import { PortfolioPage } from "@pages/portfolio";
 import { ResumePage } from "@pages/resume";
@@ -15,7 +16,14 @@ export const router = createBrowserRouter([
     element: <App />,
     children: [
       { index: true, element: <HomePage /> },
-      { path: PATH.BLOG.INDEX, element: <BlogPage /> },
+      {
+        path: PATH.BLOG.INDEX,
+        element: <BlogPage />,
+        children: [
+          { index: true, element: <BlogPostList /> },
+          { path: PATH.BLOG.POST.INDEX(), element: <BlogPostDetail /> },
+        ],
+      },
       { path: PATH.RESUME.INDEX, element: <ResumePage /> },
       { path: PATH.PORTFOLIO.INDEX, element: <PortfolioPage /> },
     ],
