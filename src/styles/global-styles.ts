@@ -8,8 +8,13 @@ export const GlobalStyles = createGlobalStyle`
     font-style: normal;
   }
 
+  @font-face {
+    src: url("@assets/fonts/CookieRunRegular.ttf");
+    font-family: "CookieRun-Regular"
+}
+
   :root {
-    --nav-height: 80px;
+    --nav-height: 5rem;
   }
 
   *, *::before, *::after {
