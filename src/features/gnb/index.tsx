@@ -1,11 +1,11 @@
 import { useLocation, useNavigate } from "react-router-dom";
 
-import DogPawImage from "@assets/dog-paw.png";
+import DogPawImage from "@assets/images/dog-paw.png";
 import { PATH } from "@router/path";
 
 import { FlexDiv, Image } from "@components/elements";
 
-import { GNBMenuText } from "./components";
+import { GNBHomeText, GNBMenuText } from "./components";
 
 export const GNB = () => {
   const navigate = useNavigate();
@@ -17,17 +17,18 @@ export const GNB = () => {
         justify="space-between"
         px={2}
         pWidth={100}
-        height={5}
-        style={{ position: "fixed" }}
+        style={{ height: "var(--nav-height)", position: "fixed" }}
       >
-        <Image
-          src={DogPawImage}
-          alt="home"
-          width={1.5}
-          height={1.5}
-          pointer={true}
-          onClick={() => navigate(PATH.HOME.INDEX)}
-        />
+        <FlexDiv gap={0.3} onClick={() => navigate(PATH.HOME.INDEX)}>
+          <Image
+            src={DogPawImage}
+            alt="home"
+            width={1.5}
+            height={1.5}
+            pointer={true}
+          />
+          <GNBHomeText>Honey Sweet Dev</GNBHomeText>
+        </FlexDiv>
         <FlexDiv gap={1}>
           <GNBMenuText menu="blog" path={PATH.BLOG.INDEX} location={pathname} />
           <GNBMenuText
@@ -42,7 +43,7 @@ export const GNB = () => {
           />
         </FlexDiv>
       </FlexDiv>
-      <div style={{ height: "5rem" }}></div>
+      <div style={{ height: "var(--nav-height)" }}></div>
     </>
   );
 };
