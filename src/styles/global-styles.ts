@@ -7,6 +7,11 @@ export const GlobalStyles = createGlobalStyle`
     font-weight: 400;
     font-style: normal;
   }
+
+  :root {
+    --nav-height: 80px;
+  }
+
   *, *::before, *::after {
     box-sizing: border-box;
   }
