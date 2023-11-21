@@ -12,8 +12,16 @@ export default defineConfig({
         replacement: resolve(__dirname, "./src/apis"),
       },
       {
+        find: "@assets",
+        replacement: resolve(__dirname, "./src/assets"),
+      },
+      {
         find: "@components",
         replacement: resolve(__dirname, "./src/components"),
+      },
+      {
+        find: "@features",
+        replacement: resolve(__dirname, "./src/features"),
       },
       {
         find: "@lib",
