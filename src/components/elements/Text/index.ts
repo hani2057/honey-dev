@@ -11,7 +11,7 @@ const Text = styled.p<{
     font-size: ${size}rem;
     font-weight: ${bold ? "700" : "400"};
     color: ${color || "#000000"};
-    cursor: ${pointer ? "pointer" : "auto"}
+    cursor: ${pointer ? "pointer" : "auto"};
 
     &:hover {
       color: ${hColor || "#000000"};
