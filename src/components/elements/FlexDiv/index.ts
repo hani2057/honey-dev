@@ -8,6 +8,9 @@ const FlexDiv = styled.div<{
   px?: number; // padding-left && padding-right
   py?: number; // padding-top && padding-bottom
   p?: string; // padding
+  width?: number;
+  pWidth?: number; // width using percent unit
+  height?: number;
 }>`
   ${({
     direction = "row",
@@ -17,6 +20,9 @@ const FlexDiv = styled.div<{
     px = 0,
     py = 0,
     p,
+    width,
+    pWidth,
+    height,
   }) => css`
     display: flex;
     flex-direction: ${direction};
@@ -24,6 +30,8 @@ const FlexDiv = styled.div<{
     align-items: ${align};
     gap: ${gap}rem;
     padding: ${p || `${py}rem ${px}rem`};
+    width: ${pWidth ? pWidth + "%" : width ? width + "rem" : "auto"};
+    height: ${height ? height + "rem" : "auto"};
   `}
 `;
 
