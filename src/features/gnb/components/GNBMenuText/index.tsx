@@ -14,8 +14,8 @@ export const GNBMenuText = ({ menu, path, location }: GNBMenuTextProps) => {
   return (
     <Text
       onClick={() => navigate(path)}
-      color={location === path ? "blue" : null}
-      bold={location === path}
+      color={location.startsWith(path) ? "blue" : null}
+      bold={location.startsWith(path)}
       pointer={true}
     >
       {menu}
