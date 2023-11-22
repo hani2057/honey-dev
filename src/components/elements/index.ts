@@ -1,3 +1,3 @@
-export * from "./FlexDiv";
-export * from "./Image";
-export * from "./Text";
+export * from "./flex-div";
+export * from "./image";
+export * from "./text";
