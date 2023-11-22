@@ -1,10 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
 
 import { BlogPage, BlogPostDetail, BlogPostList } from "@features/blog";
-
-import { HomePage } from "@pages/home";
-import { PortfolioPage } from "@pages/portfolio";
-import { ResumePage } from "@pages/resume";
+import { HomePage } from "@features/home";
+import { PortfolioPage } from "@features/portfolio";
+import { ResumePage } from "@features/resume";
 
 import { App } from "@/App";
 
