@@ -14,7 +14,7 @@ export const GlobalStyles = createGlobalStyle`
 }
 
   :root {
-    --nav-height: 5rem;
+    --nav-height: 3.5rem;
   }
 
   *, *::before, *::after {
