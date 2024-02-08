@@ -4,7 +4,7 @@ import { Text } from "@components/elements";
 
 const GNBHomeText = styled(Text)`
   font-family: "CookieRun-Regular";
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   cursor: pointer;
 `;
 export { GNBHomeText };

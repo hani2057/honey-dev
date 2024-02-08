@@ -7,7 +7,7 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   :root {
-    --nav-height: 3.5rem;
+    --nav-height: 4rem;
   }
 
   *, *::before, *::after {
@@ -18,6 +18,7 @@ export const GlobalStyles = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     line-height: 1;
+    background-color: #D2E7FD;
   }
   html, body, div, span, applet, object, iframe,
   h1, h2, h3, h4, h5, h6, p, blockquote, pre,
