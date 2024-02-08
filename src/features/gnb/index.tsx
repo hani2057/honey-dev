@@ -15,29 +15,34 @@ export const GNB = () => {
     <>
       <FlexDiv
         justify="space-between"
-        px={2}
+        px={1}
         pWidth={100}
-        style={{ height: "var(--nav-height)", position: "fixed" }}
+        style={{
+          height: "var(--nav-height)",
+          position: "fixed",
+          backgroundColor: "#ffffff",
+        }}
       >
         <FlexDiv gap={0.3} onClick={() => navigate(PATH.HOME.INDEX)}>
           <Image
             src={DogPawImage}
             alt="home"
-            width={1.5}
-            height={1.5}
+            width={1.4}
+            height={1.4}
             pointer={true}
+            style={{ transform: "rotate(-20deg)" }}
           />
           <GNBHomeText>Honey Sweet Dev</GNBHomeText>
         </FlexDiv>
-        <FlexDiv gap={1}>
-          <GNBMenuText menu="blog" path={PATH.BLOG.INDEX} location={pathname} />
+        <FlexDiv>
+          <GNBMenuText menu="Blog" path={PATH.BLOG.INDEX} location={pathname} />
           <GNBMenuText
-            menu="resume"
+            menu="Resume"
             path={PATH.RESUME.INDEX}
             location={pathname}
           />
           <GNBMenuText
-            menu="portfolio"
+            menu="Portfolio"
             path={PATH.PORTFOLIO.INDEX}
             location={pathname}
           />
