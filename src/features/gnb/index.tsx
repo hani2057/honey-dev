@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 
-import DogPawImage from "@assets/images/dog-paw.png";
+import DogPawImage from "@assets/images/dogPaw.png";
 import { PATH } from "@router/path";
 
 import { FlexDiv, Image } from "@components/elements";

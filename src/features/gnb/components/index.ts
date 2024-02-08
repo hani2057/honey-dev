@@ -1,2 +1,2 @@
-export * from "./gnb-home-text";
-export * from "./gnb-menu-text";
+export * from "./gnbHomeText";
+export * from "./gnbMenuText";
