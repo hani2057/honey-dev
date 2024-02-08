@@ -4,7 +4,7 @@ import ReactDOM from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
 
 import { router } from "@router/router";
-import { GlobalStyles } from "@styles/global-styles.ts";
+import { GlobalStyles } from "@styles/globalStyles.ts";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

@@ -1,3 +1,3 @@
 export * from "./pages/blog";
-export * from "./pages/post-detail";
-export * from "./pages/post-list";
+export * from "./pages/postDetail";
+export * from "./pages/postList";

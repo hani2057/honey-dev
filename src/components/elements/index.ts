@@ -1,4 +1,4 @@
-export * from "./flex-div";
+export * from "./flexDiv";
 export * from "./image";
 export * from "./text";
 export * from "./wrapper";
