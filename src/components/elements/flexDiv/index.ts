@@ -2,7 +2,7 @@ import { css, styled } from "styled-components";
 
 const FlexDiv = styled.div<{
   direction?: "column";
-  justify?: "start" | "end" | "space-between"; // justify-content
+  justify?: "start" | "end" | "space-between" | "space-evenly"; // justify-content
   align?: "start" | "end"; // align-items
   gap?: number;
   px?: number; // padding-left && padding-right

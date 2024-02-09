@@ -1,7 +1,6 @@
-import { BlogCard, ResumeCard } from "./components";
+import { BlogCard, PortfolioCard, ResumeCard } from "./components";
 import {
   BlogArrow,
-  CardWhite,
   PortfolioArrowBody,
   PortfolioArrowHead,
   ResumeArrowBody,
@@ -21,7 +20,7 @@ export const HomePage = () => {
       {/* self introduction */}
       <ResumeCard />
       {/* portfolios */}
-      <CardWhite type="portfolio">portfolios</CardWhite>
+      <PortfolioCard />
 
       {/* 배경 화살표들 */}
       <BlogArrow />

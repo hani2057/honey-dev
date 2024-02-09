@@ -31,7 +31,7 @@ export const BlogCard = () => {
               >
                 category
               </Text>
-              <Text color={COLORS.grey[700]} size={0.75}>
+              <Text color={COLORS.grey[700]} size={0.65}>
                 2024.01.18
               </Text>
             </FlexDiv>

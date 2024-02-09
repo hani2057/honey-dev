@@ -5,5 +5,10 @@ export const PATH = {
     POST: { INDEX: (id: ":id" | number = ":id") => `/blog/post/${id}` },
   },
   RESUME: { INDEX: "/resume" },
-  PORTFOLIO: { INDEX: "/portfolio" },
+  PORTFOLIO: {
+    INDEX: "/portfolio",
+    PROJECT: {
+      INDEX: (id: ":id" | number = ":id") => `/portfolio/project/${id}`,
+    },
+  },
 };
