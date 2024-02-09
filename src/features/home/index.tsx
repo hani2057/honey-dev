@@ -1,4 +1,4 @@
-import { BlogCard } from "./components/blogCard";
+import { BlogCard, ResumeCard } from "./components";
 import {
   BlogArrow,
   CardWhite,
@@ -19,7 +19,7 @@ export const HomePage = () => {
       {/* blog posts */}
       <BlogCard />
       {/* self introduction */}
-      <CardWhite type="resume">self introduction</CardWhite>
+      <ResumeCard />
       {/* portfolios */}
       <CardWhite type="portfolio">portfolios</CardWhite>
 
