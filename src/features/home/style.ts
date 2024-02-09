@@ -30,7 +30,7 @@ const CardWhite = styled.div<{ type: "blog" | "resume" | "portfolio" }>`
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    padding: 4rem 1.5rem 3rem 1.5rem;
+    padding: 2.5% 1.5%;
   `}
 `;
 
