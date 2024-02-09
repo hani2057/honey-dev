@@ -1,5 +1,7 @@
 import { createGlobalStyle } from "styled-components";
 
+import { COLORS } from "./colors";
+
 export const GlobalStyles = createGlobalStyle`
   @font-face {
     src: url("@assets/fonts/CookieRunRegular.ttf");
@@ -18,7 +20,8 @@ export const GlobalStyles = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     line-height: 1;
-    background-color: #D2E7FD;
+    background-color: ${COLORS.main[100]};
+    color: ${COLORS.grey[900]}
   }
   html, body, div, span, applet, object, iframe,
   h1, h2, h3, h4, h5, h6, p, blockquote, pre,
