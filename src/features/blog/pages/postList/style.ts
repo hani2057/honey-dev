@@ -18,7 +18,7 @@ const PostCardDiv = styled(FlexDiv)`
   justify-content: space-between;
 
   &:hover {
-    border-radius: 25px;
+    border-radius: 20px;
     box-shadow: 0 0 4px ${COLORS.main[200]};
     cursor: pointer;
   }
