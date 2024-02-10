@@ -1,10 +1,8 @@
 import { styled } from "styled-components";
 
 const BlogOutletWrapper = styled.div`
-  width: 66%;
-  height: 100%;
+  padding-left: 17vw;
   overflow-y: scroll;
-  background-color: #ffffff;
 
   -ms-overflow-style: none;
   scrollbar-width: none;

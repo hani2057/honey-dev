@@ -2,8 +2,9 @@ import { COLORS } from "@styles/colors";
 import { css, styled } from "styled-components";
 
 const CategoryWrapper = styled.div`
-  width: 17%;
-  height: 100%;
+  width: 17vw;
+  height: calc(100vh - var(--nav-height));
+  position: fixed;
   padding: 2rem 0 0 0.5rem;
 `;
 
