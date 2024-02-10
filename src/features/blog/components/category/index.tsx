@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { selectedCategoryIdAtom } from "@features/blog/store";
+import { useAtom } from "jotai";
 
 import { FlexDiv, Text } from "@components/elements";
 
@@ -12,8 +13,9 @@ interface Category {
 }
 
 export const Category = () => {
-  // TODO: 전역으로 관리할 것
-  const [selectedCategoryId, setSelectedCategoryId] = useState(0);
+  const [selectedCategoryId, setSelectedCategoryId] = useAtom(
+    selectedCategoryIdAtom
+  );
 
   // TODO: API 연동 후 데이터 교체
   const dummyData = [
