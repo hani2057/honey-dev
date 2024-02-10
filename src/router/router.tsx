@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 
-import { BlogPage, BlogPostDetail, BlogPostList } from "@features/blog";
+import { BlogPage } from "@features/blog";
+import { PostDetail, PostList } from "@features/blog/pages";
 import { HomePage } from "@features/home";
 import { PortfolioPage } from "@features/portfolio";
 import { ResumePage } from "@features/resume";
@@ -19,8 +20,8 @@ export const router = createBrowserRouter([
         path: PATH.BLOG.INDEX,
         element: <BlogPage />,
         children: [
-          { index: true, element: <BlogPostList /> },
-          { path: PATH.BLOG.POST.INDEX(), element: <BlogPostDetail /> },
+          { index: true, element: <PostList /> },
+          { path: PATH.BLOG.POST.INDEX(), element: <PostDetail /> },
         ],
       },
       { path: PATH.RESUME.INDEX, element: <ResumePage /> },
