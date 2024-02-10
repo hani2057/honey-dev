@@ -7,13 +7,10 @@ import { BlogOutletWrapper } from "./style";
 
 export const BlogPage = () => {
   return (
-    <FlexDiv
-      justify="start"
-      style={{ height: "calc(100vh - var(--nav-height))" }}
-    >
+    <FlexDiv justify="start" align="start">
       {/* 카테고리 영역, 화면의 좌측 17% */}
       <Category />
-      {/* 컨텐츠 영역, 화면의 중앙 66% */}
+      {/* 컨텐츠 영역 */}
       <BlogOutletWrapper>
         <Outlet />
       </BlogOutletWrapper>
