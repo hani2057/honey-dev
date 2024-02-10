@@ -12,6 +12,7 @@
   "dependencies": {
     "@egjs/react-flicking": "^4.11.2",
     "@types/styled-components": "^5.1.26",
+    "jotai": "^2.6.4",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.1",
     "react": "^18.2.0",
@@ -21,7 +22,9 @@
     "styled-components": "^6.0.7"
   },
   "devDependencies": {
-    "@babel/plugin-transform-class-properties": "^7.22.5",
+    "@babel/plugin-transform-class-properties": "^7.23.3",
+    "@babel/plugin-transform-object-rest-spread": "^7.23.4",
+    "@swc-jotai/react-refresh": "^0.1.0",
     "@trivago/prettier-plugin-sort-imports": "^4.2.0",
     "@types/node": "^20.5.9",
     "@types/react": "^18.2.15",
