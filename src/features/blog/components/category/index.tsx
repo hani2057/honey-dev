@@ -1,4 +1,7 @@
+import { useNavigate } from "react-router-dom";
+
 import { selectedCategoryIdAtom } from "@features/blog/store";
+import { PATH } from "@router/path";
 import { useAtom } from "jotai";
 
 import { FlexDiv, Text } from "@components/elements";
@@ -13,6 +16,7 @@ interface Category {
 }
 
 export const Category = () => {
+  const navigate = useNavigate();
   const [selectedCategoryId, setSelectedCategoryId] = useAtom(
     selectedCategoryIdAtom
   );
@@ -97,7 +101,10 @@ export const Category = () => {
             <CategoryDiv isSelected={categoryId === selectedCategoryId}>
               <Text
                 pointer={true}
-                onClick={() => setSelectedCategoryId(categoryId)}
+                onClick={() => {
+                  setSelectedCategoryId(categoryId);
+                  navigate(PATH.BLOG.INDEX);
+                }}
               >{`${name} (${cnt})`}</Text>
             </CategoryDiv>
             <FlexDiv
@@ -117,7 +124,10 @@ export const Category = () => {
           >
             <Text
               pointer={true}
-              onClick={() => setSelectedCategoryId(categoryId)}
+              onClick={() => {
+                setSelectedCategoryId(categoryId);
+                navigate(PATH.BLOG.INDEX);
+              }}
             >{`${name} (${cnt})`}</Text>
           </CategoryDiv>
         );
