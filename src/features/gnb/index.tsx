@@ -14,6 +14,7 @@ export const GNB = () => {
   return (
     <>
       <FlexDiv
+        as={"nav"}
         justify="space-between"
         px={1}
         pWidth={100}
