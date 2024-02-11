@@ -10,6 +10,7 @@ const PostListWrapper = styled(FlexDiv)`
   justify-content: start;
   padding: 2rem;
   gap: 1.5rem;
+  min-height: calc(100vh - var(--nav-height));
 `;
 
 const PostCardDiv = styled(FlexDiv)`
