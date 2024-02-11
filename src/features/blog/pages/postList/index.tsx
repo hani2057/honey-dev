@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
+import { Pagination } from "@features/blog/components";
 import { PATH } from "@router/path";
 import { COLORS } from "@styles/colors";
 
@@ -40,7 +41,7 @@ export const PostList = () => {
             </FlexDiv>
           </PostCardDiv>
         ))}
-      <div>pagination</div>
+      <Pagination />
     </PostListWrapper>
   );
 };
