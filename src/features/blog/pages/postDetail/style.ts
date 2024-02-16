@@ -3,14 +3,43 @@ import { styled } from "styled-components";
 
 import { FlexDiv } from "@components/elements";
 
-const PostDetailWrapper = styled.main`
+const Wrapper = styled(FlexDiv)`
   width: 66vw;
   background-color: #ffffff;
-  display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: 2rem;
   min-height: calc(100vh - var(--nav-height));
+`;
+
+const ProgressBar = styled.div<{ width: number }>`
+  position: fixed;
+  top: var(--nav-height);
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(
+    to right,
+    ${COLORS.main[800]} ${({ width }) => width + "%"},
+    transparent 0
+  );
+  z-index: 3;
+`;
+
+const PostDetailWrapper = styled.main`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  gap: 1rem;
+`;
+
+const Description = styled.div`
+  width: 100%;
+  padding: 0.6rem 1rem;
+  border-left: 3px solid ${COLORS.main[500]};
+  color: ${COLORS.main[500]};
+  font-size: 0.9rem;
 `;
 
 const PostListWrapper = styled(FlexDiv)`
@@ -47,12 +76,20 @@ const TableRow = styled.tr<{ isCurrent: boolean }>`
 `;
 
 const TOC = styled.aside`
-  width: 15vw;
+  width: 14vw;
   position: fixed;
   top: calc(var(--nav-height) + 2rem);
-  right: 1vw;
   height: 20rem;
   background-color: pink;
 `;
 
-export { PostDetailWrapper, PostListWrapper, TableBody, TableRow, TOC };
+export {
+  Wrapper,
+  ProgressBar,
+  PostDetailWrapper,
+  Description,
+  PostListWrapper,
+  TableBody,
+  TableRow,
+  TOC,
+};
