@@ -4,7 +4,7 @@ import { COLORS } from "./colors";
 
 export const GlobalStyles = createGlobalStyle`
   @font-face {
-    src: url("@assets/fonts/CookieRunRegular.ttf");
+    src: local("@assets/fonts/CookieRunRegular.ttf");
     font-family: "CookieRun-Regular"
   }
 
