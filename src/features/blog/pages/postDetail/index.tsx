@@ -77,14 +77,17 @@ export const PostDetail = () => {
               <FlexDiv
                 pWidth={100}
                 justify="space-between"
-                style={{ borderBottom: `1px solid ${COLORS.grey[900]}` }}
+                style={{
+                  borderBottom: `1px solid ${COLORS.grey[300]}`,
+                  paddingBottom: "0.8rem",
+                }}
               >
-                <FlexDiv direction="column" align="start">
-                  <Text as={"h1"} size={1.8} bold={true}>
-                    Post Title
+                <FlexDiv direction="column" align="start" gap={1.25}>
+                  <Text as={"h1"} size={1.6} bold={true}>
+                    240125 개발블로그 제작기 #1
                   </Text>
-                  <Text as={"h2"} size={1.1} bold={true} line={2.5}>
-                    subtitle
+                  <Text as={"h2"} bold={true}>
+                    히스토리와 제작 배경
                   </Text>
                 </FlexDiv>
                 {/* TODO: 로그인시 수정, 삭제 로직 구현 */}
@@ -95,7 +98,7 @@ export const PostDetail = () => {
                 )}
               </FlexDiv>
               <FlexDiv gap={1} py={0.2} style={{ alignSelf: "end" }}>
-                <Text size={0.75}>2024.02.11.</Text>
+                <Text size={0.75}>2024.01.25.</Text>
                 <Text size={0.75}>0 views</Text>
               </FlexDiv>
             </FlexDiv>
@@ -103,7 +106,10 @@ export const PostDetail = () => {
             {/* 포스트 본문 */}
             <FlexDiv direction="column" pWidth={100} align="start" gap={2}>
               {/* TODO: Description은 nullable */}
-              <Description>한줄요약</Description>
+              <Description>
+                나중에 이 글을 보면 미숙함에 부끄러워질 걸 안다. 그때 "이런
+                시절도 있었지"라며 웃기 위해 기록해둔다.
+              </Description>
               {/* TODO: content 데이터 더미임 */}
               <div
                 style={{ lineHeight: "10rem" }}
@@ -163,9 +169,10 @@ export const PostDetail = () => {
         </Wrapper>
 
         {/* 화면 우측 TOC 영역 */}
-        <FlexDiv style={{ width: "17vw" }}>
+        {/* TODO: 포스트 작성 페이지 구현 이후 구현 예정 */}
+        {/* <FlexDiv style={{ width: "17vw" }}>
           <TOC />
-        </FlexDiv>
+        </FlexDiv> */}
       </FlexDiv>
     </>
   );

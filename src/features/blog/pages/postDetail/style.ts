@@ -31,7 +31,7 @@ const PostDetailWrapper = styled.main`
   display: flex;
   flex-direction: column;
   justify-content: start;
-  gap: 1rem;
+  gap: 2rem;
 `;
 
 const Description = styled.div`
