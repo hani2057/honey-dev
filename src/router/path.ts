@@ -3,6 +3,7 @@ export const PATH = {
   BLOG: {
     INDEX: "/blog",
     POST: { INDEX: (id: ":id" | number = ":id") => `/blog/post/${id}` },
+    REGISTER: { INDEX: "/blog/register" },
   },
   RESUME: { INDEX: "/resume" },
   PORTFOLIO: {
