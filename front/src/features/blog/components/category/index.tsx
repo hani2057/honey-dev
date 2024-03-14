@@ -6,7 +6,7 @@ import { useAtom } from "jotai";
 
 import { FlexDiv, Text } from "@components/elements";
 
-import { CategoryDiv, CategoryWrapper } from "./style";
+import { CategoryDiv, CategoryEditWrapper, CategoryWrapper } from "./style";
 
 interface Category {
   categoryId: number;
@@ -15,7 +15,13 @@ interface Category {
   children: Category[] | null;
 }
 
-export const Category = () => {
+type categoryType = "list" | "register";
+
+interface CategoryProps {
+  type: categoryType;
+}
+
+export const Category = ({ type }: CategoryProps) => {
   const navigate = useNavigate();
   const [selectedCategoryId, setSelectedCategoryId] = useAtom(
     selectedCategoryIdAtom
@@ -87,24 +93,32 @@ export const Category = () => {
     },
   ];
 
+  const handleClickCategory = (categoryId: number) => {
+    setSelectedCategoryId(categoryId);
+    if (type === "list") {
+      navigate(PATH.BLOG.INDEX);
+    }
+  };
+
   /**
    * 카테고리 목록을 받아 JSX를 반환
    *
    * @param {Category[]} categoryList 카테고리 목록
+   * @param {categoryType} type 포스트 목록 페이지일 경우 'list' 포스트 등록 페이지일 경우 'register'
    * @returns children(하위 카테고리)이 있는 경우 하위 카테고리를 포함하여 JSX elements를 반환
    */
-  const renderCategory = (categoryList: Category[]) =>
+  const renderCategory = (categoryList: Category[], type: categoryType) =>
     categoryList.map(({ categoryId, name, cnt, children }) => {
       if (children)
         return (
           <div key={categoryId}>
-            <CategoryDiv isSelected={categoryId === selectedCategoryId}>
+            <CategoryDiv
+              isSelected={categoryId === selectedCategoryId}
+              type={type}
+            >
               <Text
                 pointer={true}
-                onClick={() => {
-                  setSelectedCategoryId(categoryId);
-                  navigate(PATH.BLOG.INDEX);
-                }}
+                onClick={() => handleClickCategory(categoryId)}
               >{`${name} (${cnt})`}</Text>
             </CategoryDiv>
             <FlexDiv
@@ -112,7 +126,7 @@ export const Category = () => {
               align="start"
               style={{ paddingLeft: "1rem" }}
             >
-              {renderCategory(children)}
+              {renderCategory(children, type)}
             </FlexDiv>
           </div>
         );
@@ -120,18 +134,20 @@ export const Category = () => {
         return (
           <CategoryDiv
             isSelected={categoryId === selectedCategoryId}
+            type={type}
             key={categoryId}
           >
             <Text
               pointer={true}
-              onClick={() => {
-                setSelectedCategoryId(categoryId);
-                navigate(PATH.BLOG.INDEX);
-              }}
+              onClick={() => handleClickCategory(categoryId)}
             >{`${name} (${cnt})`}</Text>
           </CategoryDiv>
         );
     });
 
-  return <CategoryWrapper>{renderCategory(dummyData)}</CategoryWrapper>;
+  return type === "list" ? (
+    <CategoryWrapper>{renderCategory(dummyData, type)}</CategoryWrapper>
+  ) : (
+    <CategoryEditWrapper>{renderCategory(dummyData, type)}</CategoryEditWrapper>
+  );
 };
