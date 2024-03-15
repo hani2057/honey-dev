@@ -22,6 +22,7 @@ export const GNB = () => {
           height: "var(--nav-height)",
           position: "fixed",
           backgroundColor: "#ffffff",
+          zIndex: 100,
         }}
       >
         <FlexDiv gap={0.3} onClick={() => navigate(PATH.HOME.INDEX)}>
