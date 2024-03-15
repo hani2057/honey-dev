@@ -1,21 +1,24 @@
+import { useEffect } from "react";
+
+import { GoPlus } from "react-icons/go";
+import { GoChevronUp } from "react-icons/go";
+import { GoChevronDown } from "react-icons/go";
+import { HiMinusSmall } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
 
 import { selectedCategoryIdAtom } from "@features/blog/store";
+import { TCategory, categoryType } from "@features/blog/types";
 import { PATH } from "@router/path";
 import { useAtom } from "jotai";
 
 import { FlexDiv, Text } from "@components/elements";
 
-import { CategoryDiv, CategoryEditWrapper, CategoryWrapper } from "./style";
-
-interface Category {
-  categoryId: number;
-  name: string;
-  cnt: number;
-  children: Category[] | null;
-}
-
-type categoryType = "list" | "register";
+import {
+  CategoryDiv,
+  CategoryEditWrapper,
+  CategoryWrapper,
+  IconsWrapper,
+} from "./style";
 
 interface CategoryProps {
   type: categoryType;
@@ -93,6 +96,14 @@ export const Category = ({ type }: CategoryProps) => {
     },
   ];
 
+  useEffect(() => setSelectedCategoryId(0), []);
+
+  /**
+   * 카테고리 id를 받아 selectedCategoryId 상태를 업데이트.
+   * 포스트 목록 또는 상세 페이지일 경우 카테고리 id에 해당하는 포스트 목록으로 이동.
+   *
+   * @param {number} categoryId 카테고리 id
+   */
   const handleClickCategory = (categoryId: number) => {
     setSelectedCategoryId(categoryId);
     if (type === "list") {
@@ -103,23 +114,38 @@ export const Category = ({ type }: CategoryProps) => {
   /**
    * 카테고리 목록을 받아 JSX를 반환
    *
-   * @param {Category[]} categoryList 카테고리 목록
+   * @param {TCategory[]} categoryList 카테고리 목록
    * @param {categoryType} type 포스트 목록 페이지일 경우 'list' 포스트 등록 페이지일 경우 'register'
    * @returns children(하위 카테고리)이 있는 경우 하위 카테고리를 포함하여 JSX elements를 반환
    */
-  const renderCategory = (categoryList: Category[], type: categoryType) =>
+  const renderCategory = (categoryList: TCategory[], type: categoryType) =>
     categoryList.map(({ categoryId, name, cnt, children }) => {
+      const isSelected = categoryId === selectedCategoryId;
+
       if (children)
         return (
           <div key={categoryId}>
-            <CategoryDiv
-              isSelected={categoryId === selectedCategoryId}
-              type={type}
-            >
+            <CategoryDiv isSelected={isSelected} type={type}>
               <Text
                 pointer={true}
                 onClick={() => handleClickCategory(categoryId)}
               >{`${name} (${cnt})`}</Text>
+              {isSelected && type === "edit" && (
+                <IconsWrapper>
+                  <Text pointer={true}>
+                    <GoPlus />
+                  </Text>
+                  <Text pointer={true}>
+                    <HiMinusSmall />
+                  </Text>
+                  <Text pointer={true}>
+                    <GoChevronUp />
+                  </Text>
+                  <Text pointer={true}>
+                    <GoChevronDown />
+                  </Text>
+                </IconsWrapper>
+              )}
             </CategoryDiv>
             <FlexDiv
               direction="column"
@@ -132,15 +158,27 @@ export const Category = ({ type }: CategoryProps) => {
         );
       else
         return (
-          <CategoryDiv
-            isSelected={categoryId === selectedCategoryId}
-            type={type}
-            key={categoryId}
-          >
+          <CategoryDiv isSelected={isSelected} type={type} key={categoryId}>
             <Text
               pointer={true}
               onClick={() => handleClickCategory(categoryId)}
             >{`${name} (${cnt})`}</Text>
+            {isSelected && type === "edit" && (
+              <IconsWrapper>
+                <Text>
+                  <GoPlus />
+                </Text>
+                <Text>
+                  <HiMinusSmall />
+                </Text>
+                <Text>
+                  <GoChevronUp />
+                </Text>
+                <Text>
+                  <GoChevronDown />
+                </Text>
+              </IconsWrapper>
+            )}
           </CategoryDiv>
         );
     });
