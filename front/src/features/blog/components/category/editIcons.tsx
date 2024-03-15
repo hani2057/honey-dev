@@ -4,9 +4,9 @@ import { GoChevronUp } from "react-icons/go";
 import { GoChevronDown } from "react-icons/go";
 import { HiMinusSmall } from "react-icons/hi2";
 
-import { categoriesAtom } from "@features/blog/store";
+import { categoriesAtom, selectedCategoryIdAtom } from "@features/blog/store";
 import { TCategory } from "@features/blog/types";
-import { useAtom } from "jotai";
+import { useAtom, useSetAtom } from "jotai";
 
 import { Text } from "@components/elements";
 
@@ -18,6 +18,7 @@ interface EditIconsProps {
 
 export const EditIcons = ({ selectedCategoryId }: EditIconsProps) => {
   const [categoryData, setCategoryData] = useAtom(categoriesAtom);
+  const setSelectedCategoryId = useSetAtom(selectedCategoryIdAtom);
 
   /**
    * 새로운 카테고리를 생성하여 반환
@@ -64,6 +65,36 @@ export const EditIcons = ({ selectedCategoryId }: EditIconsProps) => {
     setCategoryData(newCategoryData);
   };
 
+  /**
+   * 선택한 카테고리를 삭제
+   */
+  const handleClickMinus = () => {
+    const deleteCategory = (categories: TCategory[]) => {
+      // 카테고리 리스트에서 해당 카테고리 아이디를 찾는다
+      const categoryToDelete = categories.find(
+        ({ categoryId }) => categoryId === selectedCategoryId
+      );
+      // 있으면 삭제하고 리턴
+      if (categoryToDelete) {
+        return categories.filter(
+          ({ categoryId }) => categoryId !== categoryToDelete.categoryId
+        );
+      }
+      // 없으면 children에 대해 반복
+      else {
+        return categories.map((category) => {
+          if (category.children)
+            category.children = deleteCategory(category.children);
+          return category;
+        });
+      }
+    };
+
+    // TODO: 정말 삭제하시겠습니까 alert
+    setCategoryData(deleteCategory(categoryData));
+    setSelectedCategoryId(0);
+  };
+
   if (selectedCategoryId === 0)
     return (
       <IconsWrapper>
@@ -78,7 +109,7 @@ export const EditIcons = ({ selectedCategoryId }: EditIconsProps) => {
         <Text pointer={true} onClick={handleClickPlus}>
           <GoPlus />
         </Text>
-        <Text pointer={true}>
+        <Text pointer={true} onClick={handleClickMinus}>
           <HiMinusSmall />
         </Text>
         <Text pointer={true}>
