@@ -1,3 +1,4 @@
+import { categoryType } from "@features/blog/types";
 import { COLORS } from "@styles/colors";
 import { css, styled } from "styled-components";
 
@@ -19,9 +20,9 @@ const CategoryEditWrapper = styled.div`
 
 const CategoryDiv = styled.div<{
   isSelected: boolean;
-  type: "list" | "register";
+  type: categoryType;
 }>`
-  width: 100%;
+  width: ${({ type }) => (type === "list" ? "100%" : "fit-content")};
   height: 2.5rem;
   display: flex;
   align-items: center;
@@ -80,7 +81,7 @@ const CategoryDiv = styled.div<{
             z-index: -1;
           }
         `
-      : isSelected && type === "register"
+      : isSelected
       ? css`
           & > p {
             font-weight: 700;
@@ -101,4 +102,11 @@ const CategoryDiv = styled.div<{
       : ""}
 `;
 
-export { CategoryWrapper, CategoryEditWrapper, CategoryDiv };
+const IconsWrapper = styled.div`
+  display: flex;
+  gap: 0.5rem;
+  position: absolute;
+  left: calc(100% + 1.5rem);
+`;
+
+export { CategoryWrapper, CategoryEditWrapper, CategoryDiv, IconsWrapper };
