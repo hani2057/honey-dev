@@ -95,6 +95,74 @@ export const EditIcons = ({ selectedCategoryId }: EditIconsProps) => {
     setSelectedCategoryId(0);
   };
 
+  /**
+   * 선택한 카테고리를 한 칸 위로 이동. 배열 내 인덱스 -1
+   */
+  const handleClickUp = () => {
+    const moveCategoryUp = (categories: TCategory[]) => {
+      // 카테고리 리스트에서 해당 카테고리 아이디를 찾는다
+      const categoryToMove = categories.find(
+        ({ categoryId }) => categoryId === selectedCategoryId
+      );
+      // 있으면 인덱스를 찾아 -1 이동한다
+      if (categoryToMove) {
+        const idxToDelete = categories.indexOf(categoryToMove);
+        const idxToInsert =
+          idxToDelete === 0 ? categories.length : idxToDelete - 1;
+        categories.splice(idxToDelete, 1);
+        categories.splice(idxToInsert, 0, categoryToMove);
+        return categories;
+      }
+      // 없으면 children에 대해 반복
+      else {
+        return categories.map((category) => {
+          if (category.children)
+            category.children = moveCategoryUp(category.children);
+          return category;
+        });
+      }
+    };
+
+    const newCategoryData = moveCategoryUp(
+      categoryData.filter(({ categoryId }) => categoryId !== 0)
+    );
+    setCategoryData([categoryData[0], ...newCategoryData]);
+  };
+
+  /**
+   * 선택한 카테고리를 한 칸 아래로 이동. 배열 내 인덱스 +1
+   */
+  const handleClickDown = () => {
+    const moveCategoryDown = (categories: TCategory[]) => {
+      // 카테고리 리스트에서 해당 카테고리 아이디를 찾는다
+      const categoryToMove = categories.find(
+        ({ categoryId }) => categoryId === selectedCategoryId
+      );
+      // 있으면 인덱스를 찾아 +1 이동한다
+      if (categoryToMove) {
+        const idxToDelete = categories.indexOf(categoryToMove);
+        const idxToInsert =
+          idxToDelete === categories.length - 1 ? 0 : idxToDelete + 1;
+        categories.splice(idxToDelete, 1);
+        categories.splice(idxToInsert, 0, categoryToMove);
+        return categories;
+      }
+      // 없으면 children에 대해 반복
+      else {
+        return categories.map((category) => {
+          if (category.children)
+            category.children = moveCategoryDown(category.children);
+          return category;
+        });
+      }
+    };
+
+    const newCategoryData = moveCategoryDown(
+      categoryData.filter(({ categoryId }) => categoryId !== 0)
+    );
+    setCategoryData([categoryData[0], ...newCategoryData]);
+  };
+
   if (selectedCategoryId === 0)
     return (
       <IconsWrapper>
@@ -112,10 +180,10 @@ export const EditIcons = ({ selectedCategoryId }: EditIconsProps) => {
         <Text pointer={true} onClick={handleClickMinus}>
           <HiMinusSmall />
         </Text>
-        <Text pointer={true}>
+        <Text pointer={true} onClick={handleClickUp}>
           <GoChevronUp />
         </Text>
-        <Text pointer={true}>
+        <Text pointer={true} onClick={handleClickDown}>
           <GoChevronDown />
         </Text>
         <Text pointer={true}>
