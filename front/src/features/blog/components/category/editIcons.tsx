@@ -20,41 +20,41 @@ export const EditIcons = ({ selectedCategoryId }: EditIconsProps) => {
   const [categoryData, setCategoryData] = useAtom(categoriesAtom);
 
   /**
+   * 새로운 카테고리를 생성하여 반환
+   *
+   * @returns {TCategory} 새로 생성된 카테고리
+   */
+  const createNewCategory = () => {
+    // TODO: 취소할 때를 대비해서 createdCategoryId 저장해두기
+    // TODO: API 연동
+    return {
+      categoryId: 100,
+      name: "child add test",
+      cnt: 0,
+      children: null,
+    };
+  };
+
+  /**
    * 선택한 카테고리의 하위에 새로운 카테고리를 생성
    */
   const handleClickPlus = () => {
+    const newCategory = createNewCategory();
     const addNewChild = (category: TCategory) => {
       if (category.children === null) {
         if (category.categoryId === selectedCategoryId) {
-          // TODO: create new category
-          category.children = [
-            {
-              categoryId: 100,
-              name: "child add test",
-              cnt: 0,
-              children: null,
-            },
-          ];
-          // TODO: 취소할 때를 대비해서 createdCategoryId 저장해두기
+          category.children = [newCategory];
         }
-        return category;
       } else {
-        console.log("aa");
         if (category.categoryId === selectedCategoryId) {
-          // TODO: create new category
-          category.children.push({
-            categoryId: 100,
-            name: "child add test",
-            cnt: 0,
-            children: null,
-          });
-          // TODO: 취소할 때를 대비해서 createdCategoryId 저장해두기
+          category.children.push(newCategory);
         } else {
           category.children = category.children.map((category) =>
             addNewChild(category)
           );
         }
       }
+
       return category;
     };
 
