@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -10,10 +10,19 @@ interface MDEditorProps {
   height?: number;
   pWidth?: number;
   pHeight?: number;
+  value: string;
+  setValue: Dispatch<SetStateAction<string>>;
 }
 
-export const MDEditor = ({ width, height, pWidth, pHeight }: MDEditorProps) => {
-  const [value, setValue] = useState("");
+export const MDEditor = ({
+  width,
+  height,
+  pWidth,
+  pHeight,
+  value,
+  setValue,
+}: MDEditorProps) => {
+  // const [value, setValue] = useState("");
 
   const modules = {
     toolbar: [

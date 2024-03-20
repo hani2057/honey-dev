@@ -3,7 +3,7 @@ import { COLORS } from "@styles/colors";
 import { css, styled } from "styled-components";
 
 // 포스트 목록 페이지 wrapper
-const CategoryWrapper = styled.div`
+const CategoryWrapper = styled.form`
   width: 17vw;
   height: calc(100vh - var(--nav-height));
   position: fixed;
