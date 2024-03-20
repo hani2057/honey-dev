@@ -34,7 +34,8 @@ export const GNB = () => {
             pointer={true}
             style={{ transform: "rotate(-20deg)" }}
           />
-          <GNBHomeText>Honey Sweet Dev</GNBHomeText>
+          {/* <GNBHomeText>Honey Sweet Dev</GNBHomeText> */}
+          <GNBHomeText>개발...의 두번째 발가락쯤</GNBHomeText>
         </FlexDiv>
         <FlexDiv>
           <GNBMenuText menu="Blog" path={PATH.BLOG.INDEX} location={pathname} />
