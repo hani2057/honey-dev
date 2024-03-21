@@ -1,7 +1,10 @@
 import { FormEvent, useState } from "react";
 
 import { Category } from "@features/blog/components";
-import { selectedCategoryIdAtom } from "@features/blog/store";
+import {
+  isEditingCategoryNameAtom,
+  selectedCategoryIdAtom,
+} from "@features/blog/store";
 import { useAtomValue } from "jotai";
 
 import { FlexDiv, Text } from "@components/elements";
@@ -16,6 +19,7 @@ export const PostRegister = () => {
   const [description, setDescription] = useState("");
   const [content, setContent] = useState("");
   const selectedCategoryId = useAtomValue(selectedCategoryIdAtom);
+  const isEditingCategoryName = useAtomValue(isEditingCategoryNameAtom);
 
   /**
    * 포스트 등록
@@ -65,15 +69,35 @@ export const PostRegister = () => {
         <FlexDiv direction="column" gap={1} align="start">
           <FlexDiv gap={3}>
             <Text bold={true}>카테고리 선택</Text>
-            {/* TODO: 수정시 취소버튼 추가 */}
-            <Text
-              bold={true}
-              size={0.75}
-              pointer={true}
-              onClick={() => setType(type === "register" ? "edit" : "register")}
-            >
-              {type === "register" ? "수정" : "완료"}
-            </Text>
+            {type === "register" ? (
+              <Text
+                bold={true}
+                size={0.75}
+                pointer={true}
+                onClick={() => setType("edit")}
+              >
+                수정
+              </Text>
+            ) : (
+              <>
+                <Text
+                  bold={true}
+                  size={0.75}
+                  pointer={true}
+                  onClick={() => isEditingCategoryName || setType("register")}
+                >
+                  완료
+                </Text>
+                <Text
+                  bold={true}
+                  size={0.75}
+                  pointer={true}
+                  onClick={() => isEditingCategoryName || setType("register")}
+                >
+                  취소
+                </Text>
+              </>
+            )}
           </FlexDiv>
           <Category type={type} />
         </FlexDiv>

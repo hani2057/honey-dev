@@ -2,10 +2,15 @@ import { useEffect } from "react";
 
 import { useNavigate } from "react-router-dom";
 
-import { categoriesAtom, selectedCategoryIdAtom } from "@features/blog/store";
+import {
+  categoriesAtom,
+  isEditingCategoryNameAtom,
+  newCategoryNameAtom,
+  selectedCategoryIdAtom,
+} from "@features/blog/store";
 import { TCategory, categoryType } from "@features/blog/types";
 import { PATH } from "@router/path";
-import { useAtom, useAtomValue } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 
 import { FlexDiv, Text } from "@components/elements";
 
@@ -22,6 +27,8 @@ export const Category = ({ type }: CategoryProps) => {
     selectedCategoryIdAtom
   );
   const categoryData = useAtomValue(categoriesAtom);
+  const isEditingCategoryName = useAtomValue(isEditingCategoryNameAtom);
+  const setNewCategoryName = useSetAtom(newCategoryNameAtom);
 
   useEffect(() => setSelectedCategoryId(0), []);
 
@@ -53,10 +60,18 @@ export const Category = ({ type }: CategoryProps) => {
         return (
           <div key={categoryId}>
             <CategoryDiv isSelected={isSelected} type={type}>
-              <Text
-                pointer={true}
-                onClick={() => handleClickCategory(categoryId)}
-              >{`${name} (${cnt})`}</Text>
+              {isSelected && isEditingCategoryName ? (
+                <input
+                  defaultValue={name}
+                  onChange={(e) => setNewCategoryName(e.target.value)}
+                  autoFocus
+                />
+              ) : (
+                <Text
+                  pointer={true}
+                  onClick={() => handleClickCategory(categoryId)}
+                >{`${name} (${cnt})`}</Text>
+              )}
               {isSelected && type === "edit" && (
                 <EditIcons selectedCategoryId={categoryId} />
               )}
