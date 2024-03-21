@@ -1,12 +1,18 @@
 import { AiOutlineEdit } from "react-icons/ai";
+import { BiSave } from "react-icons/bi";
 import { GoPlus } from "react-icons/go";
 import { GoChevronUp } from "react-icons/go";
 import { GoChevronDown } from "react-icons/go";
 import { HiMinusSmall } from "react-icons/hi2";
 
-import { categoriesAtom, selectedCategoryIdAtom } from "@features/blog/store";
+import {
+  categoriesAtom,
+  isEditingCategoryNameAtom,
+  newCategoryNameAtom,
+  selectedCategoryIdAtom,
+} from "@features/blog/store";
 import { TCategory } from "@features/blog/types";
-import { useAtom, useSetAtom } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 
 import { Text } from "@components/elements";
 
@@ -19,6 +25,10 @@ interface EditIconsProps {
 export const EditIcons = ({ selectedCategoryId }: EditIconsProps) => {
   const [categoryData, setCategoryData] = useAtom(categoriesAtom);
   const setSelectedCategoryId = useSetAtom(selectedCategoryIdAtom);
+  const [isEditingCategoryName, setIsEditingCategoryName] = useAtom(
+    isEditingCategoryNameAtom
+  );
+  const newCategoryName = useAtomValue(newCategoryNameAtom);
 
   /**
    * 새로운 카테고리를 생성하여 반환
@@ -163,6 +173,20 @@ export const EditIcons = ({ selectedCategoryId }: EditIconsProps) => {
     setCategoryData([categoryData[0], ...newCategoryData]);
   };
 
+  /**
+   * 카테고리 이름을 수정 가능한 상태로 바꾸거나 바꾼 값을 새 카테고리 이름으로 업데이트
+   */
+  const handleClickEdit = () => {
+    if (isEditingCategoryName) {
+      // TODO: 카테고리 이름 업데이트 api 요청
+      // TODO: validation
+      console.log(newCategoryName);
+      setIsEditingCategoryName(false);
+    } else {
+      setIsEditingCategoryName(true);
+    }
+  };
+
   if (selectedCategoryId === 0)
     return (
       <IconsWrapper>
@@ -186,8 +210,8 @@ export const EditIcons = ({ selectedCategoryId }: EditIconsProps) => {
         <Text pointer={true} onClick={handleClickDown}>
           <GoChevronDown />
         </Text>
-        <Text pointer={true}>
-          <AiOutlineEdit />
+        <Text pointer={true} onClick={handleClickEdit}>
+          {isEditingCategoryName ? <BiSave /> : <AiOutlineEdit />}
         </Text>
       </IconsWrapper>
     );
