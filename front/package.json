@@ -13,6 +13,7 @@
     "@egjs/react-flicking": "^4.11.2",
     "@tanstack/react-query": "^5.29.2",
     "@types/styled-components": "^5.1.26",
+    "axios": "^1.6.8",
     "jotai": "^2.6.4",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.1",
