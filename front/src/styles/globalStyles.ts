@@ -4,8 +4,15 @@ import { COLORS } from "./colors";
 
 export const GlobalStyles = createGlobalStyle`
   @font-face {
-    src: local("@assets/fonts/CookieRunRegular.ttf");
-    font-family: "CookieRun-Regular"
+    font-family: 'CookieRun';
+    font-weight: 400;
+    font-style: normal;
+    src: url('https://cdn.jsdelivr.net/gh/webfontworld/cookierun/CookieRunRegular.eot');
+    src: url('https://cdn.jsdelivr.net/gh/webfontworld/cookierun/CookieRunRegular.eot?#iefix') format('embedded-opentype'),
+         url('https://cdn.jsdelivr.net/gh/webfontworld/cookierun/CookieRunRegular.woff2') format('woff2'),
+         url('https://cdn.jsdelivr.net/gh/webfontworld/cookierun/CookieRunRegular.woff') format('woff'),
+         url('https://cdn.jsdelivr.net/gh/webfontworld/cookierun/CookieRunRegular.ttf') format("truetype");
+    font-display: swap;
   }
 
   :root {
