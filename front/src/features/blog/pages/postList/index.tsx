@@ -25,9 +25,6 @@ export const PostList = () => {
   if (!data) return <div>loading</div>;
   const { totalPages, posts } = data;
 
-  // TODO: 페이지네이션에 추가
-  console.log(totalPages, setPage);
-
   return (
     <PostListWrapper>
       {posts.map((post) => (
@@ -51,7 +48,7 @@ export const PostList = () => {
           </FlexDiv>
         </PostCardDiv>
       ))}
-      <Pagination />
+      <Pagination page={page} setPage={setPage} totalPages={totalPages} />
     </PostListWrapper>
   );
 };
