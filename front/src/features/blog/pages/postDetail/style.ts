@@ -10,6 +10,7 @@ const Wrapper = styled(FlexDiv)`
   justify-content: space-between;
   padding: 2rem;
   min-height: calc(100vh - var(--nav-height));
+  gap: 3rem;
 `;
 
 const ProgressBar = styled.div<{ width: number }>`
