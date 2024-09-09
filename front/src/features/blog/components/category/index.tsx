@@ -39,9 +39,12 @@ export const Category = ({ type }: CategoryProps) => {
    * @param {number} categoryId 카테고리 id
    */
   const handleClickCategory = (categoryId: number) => {
+    if (categoryId === selectedCategoryId) return;
     setSelectedCategoryId(categoryId);
     if (type === "list") {
       navigate(PATH.BLOG.INDEX);
+      // TODO: 페이지 1로 보내기
+      // setPage(1)
     }
   };
 
