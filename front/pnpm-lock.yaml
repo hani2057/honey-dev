@@ -20,6 +20,9 @@ dependencies:
   dayjs:
     specifier: ^1.11.11
     version: 1.11.11
+  github-slugger:
+    specifier: ^2.0.0
+    version: 2.0.0
   jotai:
     specifier: ^2.6.4
     version: 2.6.4(@types/react@18.2.21)(react@18.2.0)
@@ -2734,6 +2737,10 @@ packages:
       has-proto: 1.0.3
       has-symbols: 1.0.3
       hasown: 2.0.2
+    dev: false
+
+  /github-slugger@2.0.0:
+    resolution: {integrity: sha512-IaOQ9puYtjrkq7Y0Ygl9KDZnrf/aiUJYUpVf89y8kyaxbRG7Y1SrX/jaumrv81vc61+kiMempujsM3Yw7w5qcw==}
     dev: false
 
   /glob-parent@5.1.2:
