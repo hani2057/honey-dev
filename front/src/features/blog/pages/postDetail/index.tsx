@@ -12,6 +12,7 @@ import { useSetAtom } from "jotai";
 import { FlexDiv, Text } from "@components/elements";
 
 import {
+  Content,
   Description,
   PostDetailWrapper,
   PostListWrapper,
@@ -109,7 +110,7 @@ export const PostDetail = () => {
             {/* 포스트 본문 */}
             <FlexDiv direction="column" pWidth={100} align="start" gap={2}>
               {description && <Description>{description}</Description>}
-              <div dangerouslySetInnerHTML={{ __html: content }}></div>
+              <Content dangerouslySetInnerHTML={{ __html: content }}></Content>
             </FlexDiv>
           </PostDetailWrapper>
 

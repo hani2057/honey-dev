@@ -43,6 +43,15 @@ const Description = styled.div`
   font-size: 0.9rem;
 `;
 
+const Content = styled.div`
+  & p,
+  & h1,
+  & h2,
+  & h3 {
+    line-height: 160%;
+  }
+`;
+
 const PostListWrapper = styled(FlexDiv)`
   border-top: 1px solid ${COLORS.grey[400]};
   width: 100%;
@@ -76,7 +85,7 @@ const TableRow = styled.tr<{ isCurrent: boolean }>`
   }
 `;
 
-const TOC = styled.aside`
+const TOCWrapper = styled.aside`
   width: 14vw;
   position: fixed;
   top: calc(var(--nav-height) + 2rem);
@@ -89,8 +98,9 @@ export {
   ProgressBar,
   PostDetailWrapper,
   Description,
+  Content,
   PostListWrapper,
   TableBody,
   TableRow,
-  TOC,
+  TOCWrapper,
 };
