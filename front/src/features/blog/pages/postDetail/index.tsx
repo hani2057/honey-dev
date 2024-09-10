@@ -117,7 +117,7 @@ export const PostDetail = () => {
               gap={1.5}
             >
               {description && <Description>{description}</Description>}
-              <Content dangerouslySetInnerHTML={{ __html: content }}></Content>
+              <Content dangerouslySetInnerHTML={{ __html: content }} />
             </FlexDiv>
           </PostDetailWrapper>
 
