@@ -11,12 +11,13 @@ import { useSetAtom } from "jotai";
 
 import { FlexDiv, Text } from "@components/elements";
 
+import { TOC } from "./components";
 import {
   Content,
   Description,
   PostDetailWrapper,
   PostListWrapper,
-  ProgressBar, // TOC,
+  ProgressBar,
   TableBody,
   TableRow,
   Wrapper,
@@ -75,7 +76,7 @@ export const PostDetail = () => {
         <Wrapper>
           <PostDetailWrapper>
             {/* 포스트 제목 */}
-            <FlexDiv pWidth={100} direction="column" align="start">
+            <FlexDiv as="header" pWidth={100} direction="column" align="start">
               <FlexDiv
                 pWidth={100}
                 justify="space-between"
@@ -108,7 +109,13 @@ export const PostDetail = () => {
             </FlexDiv>
 
             {/* 포스트 본문 */}
-            <FlexDiv direction="column" pWidth={100} align="start" gap={2}>
+            <FlexDiv
+              as="article"
+              direction="column"
+              pWidth={100}
+              align="start"
+              gap={1.5}
+            >
               {description && <Description>{description}</Description>}
               <Content dangerouslySetInnerHTML={{ __html: content }}></Content>
             </FlexDiv>
@@ -168,9 +175,9 @@ export const PostDetail = () => {
 
         {/* 화면 우측 TOC 영역 */}
         {/* TODO: 포스트 작성 페이지 구현 이후 구현 예정 */}
-        {/* <FlexDiv style={{ width: "17vw" }}>
-          <TOC />
-        </FlexDiv> */}
+        <FlexDiv style={{ width: "17vw" }}>
+          <TOC content={content} />
+        </FlexDiv>
       </FlexDiv>
     </>
   );
