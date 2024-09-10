@@ -50,6 +50,9 @@ const Content = styled.div`
   & h3 {
     line-height: 160%;
   }
+  & [id] {
+    scroll-margin-top: calc(var(--nav-height) + 0.5rem);
+  }
 `;
 
 const PostListWrapper = styled(FlexDiv)`
