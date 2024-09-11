@@ -37,10 +37,6 @@ export const PostDetail = () => {
    */
   const handleScroll = useCallback(() => {
     const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
-    // const el = document.documentElement;
-    // const scrollTop = el.scrollTop || document.body.scrollTop;
-    // const scrollHeight = el.scrollHeight || document.body.scrollHeight;
-
     const windowHeight = scrollHeight - clientHeight;
     setProgressBarWidth((scrollTop / windowHeight) * 100);
   }, []);
@@ -51,6 +47,11 @@ export const PostDetail = () => {
   }, [handleScroll]);
 
   const { data } = useGetPostDetail(currentPostId);
+  useEffect(() => {
+    // 해당 포스트의 카테고리로 selectedCategoryId 설정
+    setSelectedCategoryId(data?.categoryId);
+  }, [data?.categoryId, setSelectedCategoryId]);
+
   if (!data) return;
   const {
     title,
@@ -60,12 +61,8 @@ export const PostDetail = () => {
     createdAt,
     viewCnt,
     category,
-    categoryId,
     posts,
   } = data;
-
-  // 해당 포스트의 카테고리로 selectedCategoryId 설정
-  setSelectedCategoryId(categoryId);
 
   return (
     <>
