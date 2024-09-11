@@ -44,7 +44,7 @@ export const Pagination = ({ page, setPage, totalPages }: PaginationProps) => {
         return (
           startPage + idx <= totalPages && (
             <PageElement
-              isSelected={page === startPage + idx}
+              $isSelected={page === startPage + idx}
               onClick={() => setPage(startPage + idx)}
               key={idx}
             >

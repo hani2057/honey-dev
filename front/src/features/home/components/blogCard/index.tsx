@@ -13,17 +13,17 @@ export const BlogCard = () => {
 
   return (
     <CardWhite type="blog">
-      <FlexDiv direction="column" pWidth={100} gap={1}>
+      <FlexDiv direction="column" $pWidth={100} $gap={1}>
         {[0, 1, 2].map((v) => (
           <PostSummary
             key={v}
             onClick={() => navigate(PATH.BLOG.POST.INDEX(1))}
           >
-            <FlexDiv pWidth={100} justify="space-between">
+            <FlexDiv $pWidth={100} $justify="space-between">
               <Text
                 color={COLORS.main[600]}
                 size={0.75}
-                // pointer={true}
+                // $pointer={true}
                 // onClick={(e) => {
                 //   e.stopPropagation();
                 //   navigate(PATH.BLOG.INDEX, {}); // 해당 카테고리의 포스트 목록
@@ -35,7 +35,7 @@ export const BlogCard = () => {
                 2024.01.18
               </Text>
             </FlexDiv>
-            <Text bold={true} pointer={true}>
+            <Text $bold={true} $pointer={true}>
               title
             </Text>
           </PostSummary>
@@ -43,8 +43,8 @@ export const BlogCard = () => {
       </FlexDiv>
       <Text
         size={1.25}
-        bold={true}
-        pointer={true}
+        $bold={true}
+        $pointer={true}
         onClick={() => navigate(PATH.BLOG.INDEX)}
       >
         See More!
