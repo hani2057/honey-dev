@@ -56,6 +56,9 @@ export const GlobalStyles = createGlobalStyle`
   ol, ul {
     list-style: none;
   }
+  a {
+    text-decoration: none;
+  }
   blockquote, q {
     quotes: none;
   }
