@@ -15,9 +15,9 @@ export const GNB = () => {
     <>
       <FlexDiv
         as={"nav"}
-        justify="space-between"
-        px={1}
-        pWidth={100}
+        $justify="space-between"
+        $px={1}
+        $pWidth={100}
         style={{
           height: "var(--nav-height)",
           position: "fixed",
@@ -25,13 +25,13 @@ export const GNB = () => {
           zIndex: 100,
         }}
       >
-        <FlexDiv gap={0.3} onClick={() => navigate(PATH.HOME.INDEX)}>
+        <FlexDiv $gap={0.3} onClick={() => navigate(PATH.HOME.INDEX)}>
           <Image
             src={DogPawImage}
             alt="home"
             width={1.4}
             height={1.4}
-            pointer={true}
+            $pointer={true}
             style={{ transform: "rotate(-20deg)" }}
           />
           {/* <GNBHomeText>Honey Sweet Dev</GNBHomeText> */}

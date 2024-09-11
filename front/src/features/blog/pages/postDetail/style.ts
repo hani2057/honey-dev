@@ -35,11 +35,11 @@ const PostDetailWrapper = styled.main`
   gap: 1rem;
 `;
 
-const Description = styled.div<{ highlited: boolean }>`
+const Description = styled.div<{ $highlited: boolean }>`
   width: 100%;
   padding: 0.6rem 1rem;
   border-left: 3px solid
-    ${({ highlited }) => (highlited ? COLORS.main[500] : COLORS.grey[300])};
+    ${({ $highlited }) => ($highlited ? COLORS.main[500] : COLORS.grey[300])};
   color: ${COLORS.main[500]};
   font-size: 0.9rem;
 `;
@@ -75,7 +75,7 @@ const TableBody = styled.tbody`
   padding: 0 2rem;
 `;
 
-const TableRow = styled.tr<{ isCurrent: boolean }>`
+const TableRow = styled.tr<{ $isCurrent: boolean }>`
   width: 100%;
   height: 3rem;
   display: flex;
@@ -85,7 +85,7 @@ const TableRow = styled.tr<{ isCurrent: boolean }>`
 
   & p {
     color: ${COLORS.grey[600]};
-    font-weight: ${({ isCurrent }) => (isCurrent ? 700 : 400)};
+    font-weight: ${({ $isCurrent }) => ($isCurrent ? 700 : 400)};
   }
 `;
 

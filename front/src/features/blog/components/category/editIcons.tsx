@@ -190,7 +190,7 @@ export const EditIcons = ({ selectedCategoryId }: EditIconsProps) => {
   if (selectedCategoryId === 0)
     return (
       <IconsWrapper>
-        <Text pointer={true} onClick={handleClickPlus}>
+        <Text $pointer={true} onClick={handleClickPlus}>
           <GoPlus />
         </Text>
       </IconsWrapper>
@@ -198,19 +198,19 @@ export const EditIcons = ({ selectedCategoryId }: EditIconsProps) => {
   else
     return (
       <IconsWrapper>
-        <Text pointer={true} onClick={handleClickPlus}>
+        <Text $pointer={true} onClick={handleClickPlus}>
           <GoPlus />
         </Text>
-        <Text pointer={true} onClick={handleClickMinus}>
+        <Text $pointer={true} onClick={handleClickMinus}>
           <HiMinusSmall />
         </Text>
-        <Text pointer={true} onClick={handleClickUp}>
+        <Text $pointer={true} onClick={handleClickUp}>
           <GoChevronUp />
         </Text>
-        <Text pointer={true} onClick={handleClickDown}>
+        <Text $pointer={true} onClick={handleClickDown}>
           <GoChevronDown />
         </Text>
-        <Text pointer={true} onClick={handleClickEdit}>
+        <Text $pointer={true} onClick={handleClickEdit}>
           {isEditingCategoryName ? <BiSave /> : <AiOutlineEdit />}
         </Text>
       </IconsWrapper>

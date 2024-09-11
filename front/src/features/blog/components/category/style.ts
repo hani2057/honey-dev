@@ -19,7 +19,7 @@ const CategoryEditWrapper = styled.div`
 `;
 
 const CategoryDiv = styled.div<{
-  isSelected: boolean;
+  $isSelected: boolean;
   type: categoryType;
 }>`
   width: ${({ type }) => (type === "list" ? "100%" : "fit-content")};
@@ -30,8 +30,8 @@ const CategoryDiv = styled.div<{
   padding-right: 1rem;
   border-radius: 3rem 0 0 3rem;
   position: relative;
-  ${({ isSelected, type }) =>
-    isSelected && type === "list"
+  ${({ $isSelected, type }) =>
+    $isSelected && type === "list"
       ? css`
           background-color: #ffffff;
           & > p {
@@ -81,7 +81,7 @@ const CategoryDiv = styled.div<{
             z-index: -1;
           }
         `
-      : isSelected
+      : $isSelected
       ? css`
           & > p {
             font-weight: 700;

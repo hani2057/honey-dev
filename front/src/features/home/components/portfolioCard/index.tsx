@@ -40,21 +40,21 @@ export const PortfolioCard = () => {
             <PortfolioSummary key={v}>
               <Image
                 src={DogPawImg}
-                pWidth={100}
-                pHeight={50}
+                $pWidth={100}
+                $pHeight={50}
                 style={{ backgroundColor: "pink" }}
               />
               <PersonnelToken>팀 | 6인</PersonnelToken>
               <FlexDiv
                 direction="column"
-                justify="space-evenly"
-                align="start"
-                pHeight={50}
+                $justify="space-evenly"
+                $align="start"
+                $pHeight={50}
               >
-                <Text size={1.2} bold={true}>
+                <Text size={1.2} $bold={true}>
                   title
                 </Text>
-                <Text size={0.8} line={1.2}>
+                <Text size={0.8} $line={1.2}>
                   portfolio description 한줄요약 어쩌구저쩌구 이러저러한
                   프로젝트입니다.
                 </Text>
@@ -83,11 +83,11 @@ export const PortfolioCard = () => {
         </Flicking>
       </CardWrapper>
 
-      <Spacing space={1} />
+      <Spacing $space={1} />
       <Text
         size={1.25}
-        bold={true}
-        pointer={true}
+        $bold={true}
+        $pointer={true}
         onClick={() => navigate(PATH.PORTFOLIO.INDEX)}
       >
         See More!

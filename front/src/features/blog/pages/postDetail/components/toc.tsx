@@ -80,14 +80,14 @@ export const TOC = ({ content }: TOCProps) => {
   return (
     <TOCWrapper>
       <FlexDiv>
-        <Text bold={true}>Table Of Contents</Text>
+        <Text $bold={true}>Table Of Contents</Text>
       </FlexDiv>
       {tableOfContents.map((toc) => (
         <Description
           as="li"
           key={toc.slug}
           style={{ paddingLeft: toc.level * 1 + "rem" }}
-          highlited={activeToc.has(toc.slug)}
+          $highlited={activeToc.has(toc.slug)}
         >
           <a href={`#${toc.slug}`}>{toc.title}</a>
         </Description>

@@ -32,17 +32,17 @@ export const PostList = () => {
           onClick={() => navigate(PATH.BLOG.POST.INDEX(post.id))}
           key={post.id}
         >
-          <FlexDiv direction="column" pWidth={75} align="start" gap={1}>
-            <Text size={1.25} bold={true} pointer={true}>
+          <FlexDiv direction="column" $pWidth={75} $align="start" $gap={1}>
+            <Text size={1.25} $bold={true} $pointer={true}>
               {post.title}
             </Text>
             <PostContent>{post.content}</PostContent>
           </FlexDiv>
-          <FlexDiv direction="column" gap={2}>
-            <Text size={0.75} color={COLORS.main[700]} line={1.25}>
+          <FlexDiv direction="column" $gap={2}>
+            <Text size={0.75} color={COLORS.main[700]} $line={1.25}>
               {post.category}
             </Text>
-            <Text size={0.75} line={1}>
+            <Text size={0.75} $line={1}>
               {dayjs(post.createdAt).format("YYYY.MM.DD")}
             </Text>
           </FlexDiv>

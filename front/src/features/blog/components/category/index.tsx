@@ -62,7 +62,7 @@ export const Category = ({ type }: CategoryProps) => {
       if (children)
         return (
           <div key={categoryId}>
-            <CategoryDiv isSelected={isSelected} type={type}>
+            <CategoryDiv $isSelected={isSelected} type={type}>
               {isSelected && isEditingCategoryName ? (
                 <input
                   defaultValue={name}
@@ -71,7 +71,7 @@ export const Category = ({ type }: CategoryProps) => {
                 />
               ) : (
                 <Text
-                  pointer={true}
+                  $pointer={true}
                   onClick={() => handleClickCategory(categoryId)}
                 >{`${name} (${cnt})`}</Text>
               )}
@@ -81,7 +81,7 @@ export const Category = ({ type }: CategoryProps) => {
             </CategoryDiv>
             <FlexDiv
               direction="column"
-              align="start"
+              $align="start"
               style={{ paddingLeft: "1rem" }}
             >
               {renderCategory(children, type)}
@@ -90,9 +90,9 @@ export const Category = ({ type }: CategoryProps) => {
         );
       else
         return (
-          <CategoryDiv isSelected={isSelected} type={type} key={categoryId}>
+          <CategoryDiv $isSelected={isSelected} type={type} key={categoryId}>
             <Text
-              pointer={true}
+              $pointer={true}
               onClick={() => handleClickCategory(categoryId)}
             >{`${name} (${cnt})`}</Text>
             {isSelected && type === "edit" && (
