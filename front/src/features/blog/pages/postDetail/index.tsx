@@ -86,12 +86,10 @@ export const PostDetail = () => {
                 }}
               >
                 <FlexDiv direction="column" align="start" gap={1.25}>
-                  <Text as={"h1"} size={1.6} bold={true}>
+                  <Text size={1.6} bold={true}>
                     {title}
                   </Text>
-                  <Text as={"h2"} bold={true}>
-                    {subtitle}
-                  </Text>
+                  <Text bold={true}>{subtitle}</Text>
                 </FlexDiv>
                 {/* TODO: 로그인시 수정, 삭제 로직 구현 */}
                 {isLoggedIn && (
@@ -116,7 +114,9 @@ export const PostDetail = () => {
               align="start"
               gap={1.5}
             >
-              {description && <Description>{description}</Description>}
+              {description && (
+                <Description highlited={true}>{description}</Description>
+              )}
               <Content dangerouslySetInnerHTML={{ __html: content }} />
             </FlexDiv>
           </PostDetailWrapper>
@@ -175,7 +175,7 @@ export const PostDetail = () => {
 
         {/* 화면 우측 TOC 영역 */}
         {/* TODO: 포스트 작성 페이지 구현 이후 구현 예정 */}
-        <FlexDiv style={{ width: "17vw" }}>
+        <FlexDiv as="aside" style={{ width: "17vw" }}>
           <TOC content={content} />
         </FlexDiv>
       </FlexDiv>
