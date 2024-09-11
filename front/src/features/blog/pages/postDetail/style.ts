@@ -89,12 +89,6 @@ const TableRow = styled.tr<{ $isCurrent: boolean }>`
   }
 `;
 
-const TOCWrapper = styled.ul`
-  width: 14vw;
-  position: fixed;
-  top: calc(var(--nav-height) + 2rem);
-`;
-
 export {
   Wrapper,
   ProgressBar,
@@ -104,5 +98,4 @@ export {
   PostListWrapper,
   TableBody,
   TableRow,
-  TOCWrapper,
 };

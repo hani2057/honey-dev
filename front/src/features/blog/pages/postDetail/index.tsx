@@ -176,7 +176,6 @@ export const PostDetail = () => {
         </Wrapper>
 
         {/* 화면 우측 TOC 영역 */}
-        {/* TODO: 포스트 작성 페이지 구현 이후 구현 예정 */}
         <FlexDiv as="aside" style={{ width: "17vw" }}>
           <TOC content={content} />
         </FlexDiv>
