@@ -44,36 +44,36 @@ export const PostRegister = () => {
 
   return (
     <CategoryWrapper onSubmit={handleSubmitPost}>
-      <FlexDiv direction="column" align="start" gap={1} pWidth={70}>
-        <FlexDiv pWidth={100}>
-          <Text bold={true}>제목</Text>
+      <FlexDiv direction="column" $align="start" $gap={1} $pWidth={70}>
+        <FlexDiv $pWidth={100}>
+          <Text $bold={true}>제목</Text>
           <PostRegisterInput onChange={(e) => setTitle(e.target.value)} />
         </FlexDiv>
-        <FlexDiv pWidth={100}>
-          <Text bold={true}>부제목</Text>
+        <FlexDiv $pWidth={100}>
+          <Text $bold={true}>부제목</Text>
           <PostRegisterInput onChange={(e) => setSubtitle(e.target.value)} />
         </FlexDiv>
-        <FlexDiv pWidth={100}>
-          <Text bold={true}>한줄요약</Text>
+        <FlexDiv $pWidth={100}>
+          <Text $bold={true}>한줄요약</Text>
           <PostRegisterInput onChange={(e) => setDescription(e.target.value)} />
         </FlexDiv>
-        <Text bold={true}>본문</Text>
+        <Text $bold={true}>본문</Text>
         <MDEditor value={content} setValue={setContent} />
       </FlexDiv>
       <FlexDiv
         direction="column"
-        justify="space-between"
-        align="start"
-        pWidth={30}
+        $justify="space-between"
+        $align="start"
+        $pWidth={30}
       >
-        <FlexDiv direction="column" gap={1} align="start">
-          <FlexDiv gap={3}>
-            <Text bold={true}>카테고리 선택</Text>
+        <FlexDiv direction="column" $gap={1} $align="start">
+          <FlexDiv $gap={3}>
+            <Text $bold={true}>카테고리 선택</Text>
             {type === "register" ? (
               <Text
-                bold={true}
+                $bold={true}
                 size={0.75}
-                pointer={true}
+                $pointer={true}
                 onClick={() => setType("edit")}
               >
                 수정
@@ -81,17 +81,17 @@ export const PostRegister = () => {
             ) : (
               <>
                 <Text
-                  bold={true}
+                  $bold={true}
                   size={0.75}
-                  pointer={true}
+                  $pointer={true}
                   onClick={() => isEditingCategoryName || setType("register")}
                 >
                   완료
                 </Text>
                 <Text
-                  bold={true}
+                  $bold={true}
                   size={0.75}
-                  pointer={true}
+                  $pointer={true}
                   onClick={() => isEditingCategoryName || setType("register")}
                 >
                   취소

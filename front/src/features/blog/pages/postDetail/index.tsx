@@ -71,25 +71,30 @@ export const PostDetail = () => {
     <>
       {/* 상단 스크롤 프로그레스 바 */}
       <ProgressBar width={progressBarWidth} />
-      <FlexDiv align="start">
+      <FlexDiv $align="start">
         {/* 화면 중앙 블로그 포스트 내용 영역*/}
         <Wrapper>
           <PostDetailWrapper>
             {/* 포스트 제목 */}
-            <FlexDiv as="header" pWidth={100} direction="column" align="start">
+            <FlexDiv
+              as="header"
+              $pWidth={100}
+              direction="column"
+              $align="start"
+            >
               <FlexDiv
-                pWidth={100}
-                justify="space-between"
+                $pWidth={100}
+                $justify="space-between"
                 style={{
                   borderBottom: `1px solid ${COLORS.grey[300]}`,
                   paddingBottom: "0.8rem",
                 }}
               >
-                <FlexDiv direction="column" align="start" gap={1.25}>
-                  <Text size={1.6} bold={true}>
+                <FlexDiv direction="column" $align="start" $gap={1.25}>
+                  <Text size={1.6} $bold={true}>
                     {title}
                   </Text>
-                  <Text bold={true}>{subtitle}</Text>
+                  <Text $bold={true}>{subtitle}</Text>
                 </FlexDiv>
                 {/* TODO: 로그인시 수정, 삭제 로직 구현 */}
                 {isLoggedIn && (
@@ -98,7 +103,7 @@ export const PostDetail = () => {
                   </Text>
                 )}
               </FlexDiv>
-              <FlexDiv gap={1} py={0.2} style={{ alignSelf: "end" }}>
+              <FlexDiv $gap={1} $py={0.2} style={{ alignSelf: "end" }}>
                 <Text size={0.75}>
                   {dayjs(createdAt).format("YYYY.MM.DD.")}
                 </Text>
@@ -110,12 +115,12 @@ export const PostDetail = () => {
             <FlexDiv
               as="article"
               direction="column"
-              pWidth={100}
-              align="start"
-              gap={1.5}
+              $pWidth={100}
+              $align="start"
+              $gap={1.5}
             >
               {description && (
-                <Description highlited={true}>{description}</Description>
+                <Description $highlited={true}>{description}</Description>
               )}
               <Content dangerouslySetInnerHTML={{ __html: content }} />
             </FlexDiv>
@@ -125,7 +130,7 @@ export const PostDetail = () => {
           <PostListWrapper>
             <Text
               size={0.75}
-              bold={true}
+              $bold={true}
               color={COLORS.grey[600]}
               style={{ alignSelf: "start", marginBottom: "0.5rem" }}
             >
@@ -141,12 +146,12 @@ export const PostDetail = () => {
               <TableBody>
                 {posts.map(({ postId, title, createdAt }) => (
                   <TableRow
-                    isCurrent={Number(currentPostId) === postId}
+                    $isCurrent={Number(currentPostId) === postId}
                     key={postId}
                   >
                     <td>
                       <Text
-                        pointer={true}
+                        $pointer={true}
                         onClick={() => navigate(PATH.BLOG.POST.INDEX(postId))}
                       >
                         {title}
@@ -162,11 +167,11 @@ export const PostDetail = () => {
               </TableBody>
             </table>
             {/* TODO: API 연동 이후 이전, 이후 포스트 목록 받아와 재렌더링 */}
-            <FlexDiv height={4} gap={5}>
-              <Text pointer={true} onClick={() => {}}>
+            <FlexDiv height={4} $gap={5}>
+              <Text $pointer={true} onClick={() => {}}>
                 {"< 이전"}
               </Text>
-              <Text pointer={true} onClick={() => {}}>
+              <Text $pointer={true} onClick={() => {}}>
                 {"이후 >"}
               </Text>
             </FlexDiv>

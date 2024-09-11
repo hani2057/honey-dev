@@ -8,7 +8,7 @@ const PaginationWrapper = styled.ul`
   padding: 1.5rem;
 `;
 
-const PageElement = styled.li<{ isSelected?: boolean }>`
+const PageElement = styled.li<{ $isSelected?: boolean }>`
   width: 2rem;
   height: 2rem;
   display: flex;
@@ -17,8 +17,8 @@ const PageElement = styled.li<{ isSelected?: boolean }>`
   cursor: pointer;
   color: ${COLORS.grey[700]};
 
-  ${({ isSelected = false }) =>
-    isSelected &&
+  ${({ $isSelected = false }) =>
+    $isSelected &&
     css`
       border-radius: 5px;
       background-color: ${COLORS.main["050"]};
