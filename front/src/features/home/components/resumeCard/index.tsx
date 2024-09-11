@@ -13,23 +13,23 @@ export const ResumeCard = () => {
     <CardWhite type="resume">
       <FlexDiv
         direction="column"
-        pWidth={100}
-        pHeight={100}
-        justify="space-between"
+        $pWidth={100}
+        $pHeight={100}
+        $justify="space-between"
       >
-        <FlexDiv direction="column" gap={1}>
-          <Text size={1.6} bold={true}>
+        <FlexDiv direction="column" $gap={1}>
+          <Text size={1.6} $bold={true}>
             Kim Hani
           </Text>
-          <Text size={1.2} bold={true}>
+          <Text size={1.2} $bold={true}>
             Front-end Web Developer
           </Text>
         </FlexDiv>
-        <FlexDiv direction="column" gap={0.5}>
-          <Text line={1.5} center={true}>
+        <FlexDiv direction="column" $gap={0.5}>
+          <Text $line={1.5} $center={true}>
             Prefer to understand properly before using
           </Text>
-          <Text line={1.5} center={true}>
+          <Text $line={1.5} $center={true}>
             Try to make clean design <br />
             and do reasonable modularization
           </Text>
@@ -39,16 +39,16 @@ export const ResumeCard = () => {
           alt="GitHub Logo"
           width={3.5}
           height={3.5}
-          pointer={true}
+          $pointer={true}
           onClick={() => window.open("https://github.com/hani2057")}
         />
       </FlexDiv>
 
-      <Spacing space={1.5} />
+      <Spacing $space={1.5} />
       <Text
         size={1.25}
-        bold={true}
-        pointer={true}
+        $bold={true}
+        $pointer={true}
         onClick={() => navigate(PATH.RESUME.INDEX, {})} // 디폴트는 '한국어', '이력서'로 이동
       >
         See More!
