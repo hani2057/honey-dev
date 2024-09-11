@@ -35,10 +35,11 @@ const PostDetailWrapper = styled.main`
   gap: 1rem;
 `;
 
-const Description = styled.div`
+const Description = styled.div<{ highlited: boolean }>`
   width: 100%;
   padding: 0.6rem 1rem;
-  border-left: 3px solid ${COLORS.main[500]};
+  border-left: 3px solid
+    ${({ highlited }) => (highlited ? COLORS.main[500] : COLORS.grey[300])};
   color: ${COLORS.main[500]};
   font-size: 0.9rem;
 `;
@@ -88,12 +89,10 @@ const TableRow = styled.tr<{ isCurrent: boolean }>`
   }
 `;
 
-const TOCWrapper = styled.aside`
+const TOCWrapper = styled.ul`
   width: 14vw;
   position: fixed;
   top: calc(var(--nav-height) + 2rem);
-  height: 20rem;
-  background-color: pink;
 `;
 
 export {
