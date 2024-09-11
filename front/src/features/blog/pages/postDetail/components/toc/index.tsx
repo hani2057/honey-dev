@@ -6,9 +6,9 @@ import { useEffect, useState } from "react";
 
 import GithubSlugger from "github-slugger";
 
-import { FlexDiv, Text } from "@components/elements";
+import { Text } from "@components/elements";
 
-import { Description, TOCWrapper } from "../style";
+import { TOCLi, TOCTitle, TOCWrapper } from "./style";
 
 interface TOCProps {
   content: string;
@@ -79,18 +79,17 @@ export const TOC = ({ content }: TOCProps) => {
 
   return (
     <TOCWrapper>
-      <FlexDiv>
+      <TOCTitle>
         <Text $bold={true}>Table Of Contents</Text>
-      </FlexDiv>
+      </TOCTitle>
       {tableOfContents.map((toc) => (
-        <Description
-          as="li"
+        <TOCLi
           key={toc.slug}
-          style={{ paddingLeft: toc.level * 1 + "rem" }}
+          style={{ paddingLeft: toc.level * 0.5 + "rem" }}
           $highlited={activeToc.has(toc.slug)}
         >
-          <a href={`#${toc.slug}`}>{toc.title}</a>
-        </Description>
+          <a href={`#${toc.slug}`}>{`${"#".repeat(toc.level)} ${toc.title}`}</a>
+        </TOCLi>
       ))}
     </TOCWrapper>
   );
