@@ -1,8 +1,9 @@
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
-import { usePostPost } from "@features/blog/api";
+import { PostPostReq, usePostPost } from "@features/blog/api";
 import { Category } from "@features/blog/components";
 import {
   isEditingCategoryNameAtom,
@@ -18,52 +19,49 @@ import { CategoryWrapper, PostButton, PostRegisterInput } from "./style";
 
 export const PostRegister = () => {
   const [type, setType] = useState<"register" | "edit">("register");
-  const [title, setTitle] = useState("");
-  const [subtitle, setSubtitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [content, setContent] = useState("");
   const selectedCategoryId = useAtomValue(selectedCategoryIdAtom);
   const isEditingCategoryName = useAtomValue(isEditingCategoryNameAtom);
-
   const navigate = useNavigate();
+  const { register, handleSubmit } = useForm<PostPostReq>({
+    mode: "onChange",
+  });
+  const { mutateAsync } = usePostPost();
 
   /**
    * 포스트 등록
    */
-  const handleSubmitPost = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // TODO: validation
-    // type === "register" && title.trim().length !== 0
-
+  const onSubmit: SubmitHandler<PostPostReq> = async (data) => {
     const { postId } = await mutateAsync({
-      title,
-      subtitle,
-      description,
-      content,
+      ...data,
       categoryId: selectedCategoryId,
     });
     navigate(PATH.BLOG.POST.INDEX(postId), { replace: true });
   };
 
-  const { mutateAsync } = usePostPost();
-
   return (
-    <CategoryWrapper onSubmit={handleSubmitPost}>
+    <CategoryWrapper onSubmit={handleSubmit(onSubmit)}>
       <FlexDiv direction="column" $align="start" $gap={1} $pWidth={70}>
         <FlexDiv $pWidth={100}>
           <Text $bold={true}>제목</Text>
-          <PostRegisterInput onChange={(e) => setTitle(e.target.value)} />
+          <PostRegisterInput
+            {...register("title", {
+              required: true,
+              validate: (v) => v.trim().length !== 0,
+              maxLength: 50,
+            })}
+          />
         </FlexDiv>
         <FlexDiv $pWidth={100}>
           <Text $bold={true}>부제목</Text>
-          <PostRegisterInput onChange={(e) => setSubtitle(e.target.value)} />
+          <PostRegisterInput {...register("subtitle", { maxLength: 50 })} />
         </FlexDiv>
         <FlexDiv $pWidth={100}>
           <Text $bold={true}>한줄요약</Text>
-          <PostRegisterInput onChange={(e) => setDescription(e.target.value)} />
+          <PostRegisterInput {...register("description", { maxLength: 200 })} />
         </FlexDiv>
         <Text $bold={true}>본문</Text>
-        <MDEditor value={content} setValue={setContent} />
+        {/* TODO: content 길이 validation */}
+        <MDEditor {...register("content", { required: true })} />
       </FlexDiv>
       <FlexDiv
         direction="column"
