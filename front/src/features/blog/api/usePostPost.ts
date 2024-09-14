@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 
 import { QUERY_KEY } from "@apis/queryKeys";
 
-type PostPostReq = {
+export type PostPostReq = {
   title: string; // 제목 (null, 빈 문자열 불가능)
   subtitle: string; // 부제 (null 가능)
   description: string; // 한줄요약 (null 가능)
