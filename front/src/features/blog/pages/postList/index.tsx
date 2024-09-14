@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import { useGetPostList } from "@features/blog/api";
 import { Pagination } from "@features/blog/components";
-import { selectedCategoryIdAtom } from "@features/blog/store";
+import { categoryIdToShowAtom } from "@features/blog/store";
 import { PATH } from "@router/path";
 import { COLORS } from "@styles/colors";
 import dayjs from "dayjs";
@@ -16,7 +16,7 @@ import { PostCardDiv, PostContent, PostListWrapper } from "./style";
 
 export const PostList = () => {
   const [page, setPage] = useState(1);
-  const categoryId = useAtomValue(selectedCategoryIdAtom);
+  const categoryId = useAtomValue(categoryIdToShowAtom);
   const navigate = useNavigate();
 
   const req = { categoryId, page };

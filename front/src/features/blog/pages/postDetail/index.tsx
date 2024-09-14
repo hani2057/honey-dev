@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { useGetPostDetail } from "@features/blog/api";
-import { selectedCategoryIdAtom } from "@features/blog/store";
+import { categoryIdToShowAtom } from "@features/blog/store";
 import { PATH } from "@router/path";
 import { COLORS } from "@styles/colors";
 import dayjs from "dayjs";
@@ -26,7 +26,7 @@ import {
 export const PostDetail = () => {
   const navigate = useNavigate();
   const { id: currentPostId } = useParams() as { id: string };
-  const setSelectedCategoryId = useSetAtom(selectedCategoryIdAtom);
+  const setCategoryIdToShow = useSetAtom(categoryIdToShowAtom);
   const [progressBarWidth, setProgressBarWidth] = useState(0);
 
   // TODO: 로그인 정보 받아와서 수정
@@ -48,9 +48,9 @@ export const PostDetail = () => {
 
   const { data } = useGetPostDetail(currentPostId);
   useEffect(() => {
-    // 해당 포스트의 카테고리로 selectedCategoryId 설정
-    setSelectedCategoryId(data?.categoryId);
-  }, [data?.categoryId, setSelectedCategoryId]);
+    // 해당 포스트의 카테고리로 categoryIdToShow 설정
+    setCategoryIdToShow(data?.categoryId ?? 0);
+  }, [data?.categoryId, setCategoryIdToShow]);
 
   if (!data) return;
   const {

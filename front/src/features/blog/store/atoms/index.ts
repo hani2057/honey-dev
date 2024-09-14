@@ -68,10 +68,12 @@ const dummyCategories: TCategory[] = [
   },
 ];
 
-export const selectedCategoryIdAtom = atom(0, (get, set, newId) => {
+export const categoryIdToShowAtom = atom(0);
+
+export const categoryIdToRegisterAtom = atom(0, (get, set, newId) => {
   // 카테고리 이름 수정 중일 때는 다른 카테고리로 이동 불가
   if (get(isEditingCategoryNameAtom)) return;
-  set(selectedCategoryIdAtom, newId);
+  set(categoryIdToRegisterAtom, newId);
 });
 
 export const categoriesAtom = atom(dummyCategories);
