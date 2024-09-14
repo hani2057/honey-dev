@@ -1,12 +1,13 @@
-import { useEffect } from "react";
+import { Fragment } from "react";
 
 import { useNavigate } from "react-router-dom";
 
 import {
   categoriesAtom,
+  categoryIdToRegisterAtom,
+  categoryIdToShowAtom,
   isEditingCategoryNameAtom,
   newCategoryNameAtom,
-  selectedCategoryIdAtom,
 } from "@features/blog/store";
 import { TCategory, categoryType } from "@features/blog/types";
 import { PATH } from "@router/path";
@@ -23,14 +24,13 @@ interface CategoryProps {
 
 export const Category = ({ type }: CategoryProps) => {
   const navigate = useNavigate();
-  const [selectedCategoryId, setSelectedCategoryId] = useAtom(
-    selectedCategoryIdAtom
+  const [categoryIdToShow, setCategoryIdToShow] = useAtom(categoryIdToShowAtom);
+  const [categoryIdToRegister, setCategoryIdToRegister] = useAtom(
+    categoryIdToRegisterAtom
   );
   const categoryData = useAtomValue(categoriesAtom);
   const isEditingCategoryName = useAtomValue(isEditingCategoryNameAtom);
   const setNewCategoryName = useSetAtom(newCategoryNameAtom);
-
-  useEffect(() => setSelectedCategoryId(0), []);
 
   /**
    * 카테고리 id를 받아 selectedCategoryId 상태를 업데이트.
@@ -39,12 +39,18 @@ export const Category = ({ type }: CategoryProps) => {
    * @param {number} categoryId 카테고리 id
    */
   const handleClickCategory = (categoryId: number) => {
-    if (categoryId === selectedCategoryId) return;
-    setSelectedCategoryId(categoryId);
-    if (type === "list") {
-      navigate(PATH.BLOG.INDEX);
-      // TODO: 페이지 1로 보내기
-      // setPage(1)
+    switch (type) {
+      case "list":
+        if (categoryId === categoryIdToShow) return;
+        setCategoryIdToShow(categoryId);
+        navigate(PATH.BLOG.INDEX);
+        // TODO: 페이지 1로 보내기
+        // setPage(1)
+        break;
+      case "register":
+        if (categoryId === categoryIdToRegister) return;
+        setCategoryIdToRegister(categoryId);
+        break;
     }
   };
 
@@ -57,11 +63,14 @@ export const Category = ({ type }: CategoryProps) => {
    */
   const renderCategory = (categoryList: TCategory[], type: categoryType) =>
     categoryList.map(({ categoryId, name, cnt, children }) => {
-      const isSelected = categoryId === selectedCategoryId;
+      const isSelected =
+        type === "list"
+          ? categoryId === categoryIdToShow
+          : categoryId === categoryIdToRegister;
 
       if (children)
         return (
-          <div key={categoryId}>
+          <Fragment key={categoryId}>
             <CategoryDiv $isSelected={isSelected} type={type}>
               {isSelected && isEditingCategoryName ? (
                 <input
@@ -86,15 +95,23 @@ export const Category = ({ type }: CategoryProps) => {
             >
               {renderCategory(children, type)}
             </FlexDiv>
-          </div>
+          </Fragment>
         );
       else
         return (
           <CategoryDiv $isSelected={isSelected} type={type} key={categoryId}>
-            <Text
-              $pointer={true}
-              onClick={() => handleClickCategory(categoryId)}
-            >{`${name} (${cnt})`}</Text>
+            {isSelected && isEditingCategoryName ? (
+              <input
+                defaultValue={name}
+                onChange={(e) => setNewCategoryName(e.target.value)}
+                autoFocus
+              />
+            ) : (
+              <Text
+                $pointer={true}
+                onClick={() => handleClickCategory(categoryId)}
+              >{`${name} (${cnt})`}</Text>
+            )}
             {isSelected && type === "edit" && (
               <EditIcons selectedCategoryId={categoryId} />
             )}
