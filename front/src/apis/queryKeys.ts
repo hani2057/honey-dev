@@ -6,5 +6,6 @@ export const QUERY_KEY = {
     all: () => [...QUERY_KEY.all, "posts"],
     list: (request: GetPostsReq) => [...QUERY_KEY.blog.all(), "list", request],
     detail: (id: string) => [...QUERY_KEY.blog.all(), "detail", id],
+    post: () => [...QUERY_KEY.blog.all(), "post"],
   },
 };
