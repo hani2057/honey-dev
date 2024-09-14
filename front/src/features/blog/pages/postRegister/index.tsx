@@ -22,7 +22,12 @@ export const PostRegister = () => {
   const selectedCategoryId = useAtomValue(selectedCategoryIdAtom);
   const isEditingCategoryName = useAtomValue(isEditingCategoryNameAtom);
   const navigate = useNavigate();
-  const { register, handleSubmit } = useForm<PostPostReq>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+  } = useForm<PostPostReq>({
     mode: "onChange",
   });
   const { mutateAsync } = usePostPost();
@@ -48,20 +53,54 @@ export const PostRegister = () => {
               required: true,
               validate: (v) => v.trim().length !== 0,
               maxLength: 50,
+              onChange: (e) => {
+                const value = e.target.value;
+                if (value.length > 50) {
+                  setValue("title", value.substring(0, 50));
+                }
+              },
             })}
+            aria-invalid={errors.title ? "true" : "false"}
+            placeholder="제목(최대 50자)"
           />
         </FlexDiv>
         <FlexDiv $pWidth={100}>
           <Text $bold={true}>부제목</Text>
-          <PostRegisterInput {...register("subtitle", { maxLength: 50 })} />
+          <PostRegisterInput
+            {...register("subtitle", {
+              maxLength: 50,
+              onChange: (e) => {
+                const value = e.target.value;
+                if (value.length > 50) {
+                  setValue("subtitle", value.substring(0, 50));
+                }
+              },
+            })}
+            aria-invalid={errors.subtitle ? "true" : "false"}
+            placeholder="부제목(최대 50자)"
+          />
         </FlexDiv>
         <FlexDiv $pWidth={100}>
           <Text $bold={true}>한줄요약</Text>
-          <PostRegisterInput {...register("description", { maxLength: 200 })} />
+          <PostRegisterInput
+            {...register("description", { maxLength: 200 })}
+            aria-invalid={errors.description ? "true" : "false"}
+            placeholder="한줄요약(최대 200자)"
+          />
         </FlexDiv>
-        <Text $bold={true}>본문</Text>
-        {/* TODO: content 길이 validation */}
-        <MDEditor {...register("content", { required: true })} />
+        <FlexDiv $pWidth={100} $justify="space-between">
+          <Text $bold={true}>본문</Text>
+          {errors.title?.type === "required" && <p>제목을 입력해주세요.</p>}
+          {errors.description?.type === "maxLength" && (
+            <p>한줄요약은 최대 200자까지 가능합니다.</p>
+          )}
+          {errors.content?.type === "required" && <p>내용을 입력해주세요.</p>}
+        </FlexDiv>
+        {/* TODO: content 공백 입력 제한 validation */}
+        <MDEditor
+          {...register("content", { required: true })}
+          aria-invalid={errors.content ? "true" : "false"}
+        />
       </FlexDiv>
       <FlexDiv
         direction="column"
