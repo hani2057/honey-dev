@@ -1,5 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
-
+import { ChangeHandler } from "react-hook-form";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
@@ -10,8 +9,8 @@ interface MDEditorProps {
   height?: number;
   pWidth?: number;
   pHeight?: number;
-  value: string;
-  setValue: Dispatch<SetStateAction<string>>;
+  onChange: ChangeHandler;
+  name: string;
 }
 
 export const MDEditor = ({
@@ -19,8 +18,8 @@ export const MDEditor = ({
   height,
   pWidth,
   pHeight,
-  value,
-  setValue,
+  onChange,
+  name,
 }: MDEditorProps) => {
   const modules = {
     toolbar: [
@@ -56,6 +55,16 @@ export const MDEditor = ({
     "background",
   ];
 
+  // 참고한 블로그 글: https://velog.io/@soorokim/react-hook-form-react-quill-%EB%AF%B8%EC%84%B8%ED%8C%81-%EC%97%B0%EB%8F%99%ED%95%98%EA%B8%B0
+  const handleOnChange = (
+    value: string
+    // d: any,
+    // s: any,
+    // editor: ReactQuill.UnprivilegedEditor
+  ) => {
+    onChange({ target: { name, value } });
+  };
+
   return (
     <MDEditorWrapper
       width={width}
@@ -65,8 +74,7 @@ export const MDEditor = ({
     >
       <ReactQuill
         theme="snow"
-        value={value}
-        onChange={setValue}
+        onChange={handleOnChange}
         modules={modules}
         formats={formats}
         style={{ height: "calc(100% - 2.5rem - 2px" }}
