@@ -42,7 +42,7 @@ export const PostRegister = () => {
       content,
       categoryId: selectedCategoryId,
     });
-    navigate(PATH.BLOG.POST.INDEX(postId));
+    navigate(PATH.BLOG.POST.INDEX(postId), { replace: true });
   };
 
   const { mutateAsync } = usePostPost();
