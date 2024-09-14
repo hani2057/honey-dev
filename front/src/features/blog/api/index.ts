@@ -1,2 +1,2 @@
-export * from "./getPostList";
-export * from "./getPostDetail";
+export * from "./useGetPostList";
+export * from "./useGetPostDetail";
