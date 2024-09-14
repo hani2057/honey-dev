@@ -6,9 +6,10 @@ import { useNavigate } from "react-router-dom";
 import { PostPostReq, usePostPost } from "@features/blog/api";
 import { Category } from "@features/blog/components";
 import {
+  categoryIdToRegisterAtom,
   isEditingCategoryNameAtom,
-  selectedCategoryIdAtom,
 } from "@features/blog/store";
+import { categoryType } from "@features/blog/types";
 import { PATH } from "@router/path";
 import { useAtomValue } from "jotai";
 
@@ -18,8 +19,8 @@ import { MDEditor } from "@components/markdownEditor";
 import { CategoryWrapper, PostButton, PostRegisterInput } from "./style";
 
 export const PostRegister = () => {
-  const [type, setType] = useState<"register" | "edit">("register");
-  const selectedCategoryId = useAtomValue(selectedCategoryIdAtom);
+  const [type, setType] = useState<Exclude<categoryType, "list">>("register");
+  const categoryIdToRegister = useAtomValue(categoryIdToRegisterAtom);
   const isEditingCategoryName = useAtomValue(isEditingCategoryNameAtom);
   const navigate = useNavigate();
   const {
@@ -38,7 +39,7 @@ export const PostRegister = () => {
   const onSubmit: SubmitHandler<PostPostReq> = async (data) => {
     const { postId } = await mutateAsync({
       ...data,
-      categoryId: selectedCategoryId,
+      categoryId: categoryIdToRegister,
     });
     navigate(PATH.BLOG.POST.INDEX(postId), { replace: true });
   };

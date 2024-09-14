@@ -7,9 +7,9 @@ import { HiMinusSmall } from "react-icons/hi2";
 
 import {
   categoriesAtom,
+  categoryIdToRegisterAtom,
   isEditingCategoryNameAtom,
   newCategoryNameAtom,
-  selectedCategoryIdAtom,
 } from "@features/blog/store";
 import { TCategory } from "@features/blog/types";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
@@ -24,7 +24,7 @@ interface EditIconsProps {
 
 export const EditIcons = ({ selectedCategoryId }: EditIconsProps) => {
   const [categoryData, setCategoryData] = useAtom(categoriesAtom);
-  const setSelectedCategoryId = useSetAtom(selectedCategoryIdAtom);
+  const setCategoryIdToRegister = useSetAtom(categoryIdToRegisterAtom);
   const [isEditingCategoryName, setIsEditingCategoryName] = useAtom(
     isEditingCategoryNameAtom
   );
@@ -102,7 +102,7 @@ export const EditIcons = ({ selectedCategoryId }: EditIconsProps) => {
 
     // TODO: 정말 삭제하시겠습니까 alert
     setCategoryData(deleteCategory(categoryData));
-    setSelectedCategoryId(0);
+    setCategoryIdToRegister(0);
   };
 
   /**
