@@ -1,10 +1,14 @@
 import { FormEvent, useState } from "react";
 
+import { useNavigate } from "react-router-dom";
+
+import { usePostPost } from "@features/blog/api";
 import { Category } from "@features/blog/components";
 import {
   isEditingCategoryNameAtom,
   selectedCategoryIdAtom,
 } from "@features/blog/store";
+import { PATH } from "@router/path";
 import { useAtomValue } from "jotai";
 
 import { FlexDiv, Text } from "@components/elements";
@@ -21,26 +25,27 @@ export const PostRegister = () => {
   const selectedCategoryId = useAtomValue(selectedCategoryIdAtom);
   const isEditingCategoryName = useAtomValue(isEditingCategoryNameAtom);
 
+  const navigate = useNavigate();
+
   /**
    * 포스트 등록
    */
-  const handleSubmitPost = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmitPost = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // TODO: validation
     // type === "register" && title.trim().length !== 0
 
-    // TODO: 포스트 등록 API call
-    const params = {
+    const { postId } = await mutateAsync({
       title,
       subtitle,
       description,
       content,
       categoryId: selectedCategoryId,
-    };
-    console.log(params);
-
-    // TODO: 리턴받은 생성된 포스트 id로 해당 포스트로 이동
+    });
+    navigate(PATH.BLOG.POST.INDEX(postId));
   };
+
+  const { mutateAsync } = usePostPost();
 
   return (
     <CategoryWrapper onSubmit={handleSubmitPost}>
