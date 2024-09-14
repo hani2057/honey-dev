@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -22,8 +22,6 @@ export const MDEditor = ({
   value,
   setValue,
 }: MDEditorProps) => {
-  // const [value, setValue] = useState("");
-
   const modules = {
     toolbar: [
       [{ header: [1, 2, 3, false] }],
@@ -34,7 +32,7 @@ export const MDEditor = ({
         { indent: "-1" },
         { indent: "+1" },
       ],
-      ["link", "image"],
+      ["code-block", "link", "image"],
       [{ align: [] }, { color: [] }, { background: [] }], // dropdown with defaults from theme
       // ["clean"],
     ],
@@ -50,6 +48,7 @@ export const MDEditor = ({
     "list",
     "bullet",
     "indent",
+    "code-block",
     "link",
     "image",
     "align",
