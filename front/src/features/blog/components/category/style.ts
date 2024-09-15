@@ -16,6 +16,22 @@ export const CategoryWrapperRegister = styled.div`
   padding-right: 1rem;
 `;
 
+export const CategoryWrapperEditForm = styled.form`
+  width: 25rem;
+  height: calc(100vh - var(--nav-height));
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: start;
+  background-color: ${COLORS.grey[100]};
+  z-index: 1;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 3rem;
+  border-left: 1px solid ${COLORS.grey[300]};
+`;
+
 export const CategoryDiv = styled.div<{
   $isSelected: boolean;
   type: categoryType;
