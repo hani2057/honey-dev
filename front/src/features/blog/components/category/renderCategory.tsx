@@ -28,15 +28,15 @@ export function RenderCategory({
     categoryList.map(({ categoryId, name, cnt, children }) => {
       const isSelected = categoryId === selectedCategoryId;
 
-      if (children)
-        return (
-          <Fragment key={categoryId}>
-            <CategoryDiv $isSelected={isSelected} type={type}>
-              <Text
-                $pointer={true}
-                onClick={() => handleClickCategory(categoryId)}
-              >{`${name} (${cnt})`}</Text>
-            </CategoryDiv>
+      return (
+        <Fragment key={categoryId}>
+          <CategoryDiv $isSelected={isSelected} type={type}>
+            <Text
+              $pointer={true}
+              onClick={() => handleClickCategory(categoryId)}
+            >{`${name} (${cnt})`}</Text>
+          </CategoryDiv>
+          {children && (
             <FlexDiv
               direction="column"
               $align="start"
@@ -44,17 +44,9 @@ export function RenderCategory({
             >
               {renderCategory(children)}
             </FlexDiv>
-          </Fragment>
-        );
-      else
-        return (
-          <CategoryDiv $isSelected={isSelected} type={type} key={categoryId}>
-            <Text
-              $pointer={true}
-              onClick={() => handleClickCategory(categoryId)}
-            >{`${name} (${cnt})`}</Text>
-          </CategoryDiv>
-        );
+          )}
+        </Fragment>
+      );
     });
   const { data: categories } = useGetCategories();
   if (!categories) return;

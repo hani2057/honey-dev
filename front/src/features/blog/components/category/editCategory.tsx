@@ -1,34 +1,42 @@
+import { Dispatch, Fragment, SetStateAction, useState } from "react";
+
 import { AiOutlineEdit } from "react-icons/ai";
 import { BiSave } from "react-icons/bi";
-import { GoPlus } from "react-icons/go";
-import { GoChevronUp } from "react-icons/go";
-import { GoChevronDown } from "react-icons/go";
+import { GoChevronDown, GoChevronUp, GoPlus } from "react-icons/go";
 import { HiMinusSmall } from "react-icons/hi2";
 
-import {
-  categoriesAtom,
-  categoryIdToRegisterAtom,
-  isEditingCategoryNameAtom,
-  newCategoryNameAtom,
-} from "@features/blog/store";
 import { TCategory } from "@features/blog/types";
-import { useAtom, useAtomValue, useSetAtom } from "jotai";
+import { useQueryClient } from "@tanstack/react-query";
 
-import { Text } from "@components/elements";
+import { QUERY_KEY } from "@apis/queryKeys";
 
-import { IconsWrapper } from "./style";
+import { FlexDiv, Text } from "@components/elements";
 
-interface EditIconsProps {
-  selectedCategoryId: number;
+import {
+  CategoryDiv,
+  CategoryWrapperEditForm,
+  CategoryWrapperRegister,
+  IconsWrapper,
+} from "./style";
+
+interface EditCategoryProps {
+  setEditCategory: Dispatch<SetStateAction<boolean>>;
 }
 
-export const EditIcons = ({ selectedCategoryId }: EditIconsProps) => {
-  const [categoryData, setCategoryData] = useAtom(categoriesAtom);
-  const setCategoryIdToRegister = useSetAtom(categoryIdToRegisterAtom);
-  const [isEditingCategoryName, setIsEditingCategoryName] = useAtom(
-    isEditingCategoryNameAtom
+export function EditCategory({ setEditCategory }: EditCategoryProps) {
+  const queryClient = useQueryClient();
+  const [selectedCategoryId, setSelectedCategoryid] = useState(0);
+  const [isEditingCategoryName, setIsEditingCategoryName] = useState(false);
+  const [newCategoryName, setNewCategoryName] = useState("");
+  const [categoryData, setCategoryData] = useState<TCategory[]>(
+    queryClient.getQueryData(QUERY_KEY.blog.category.list()) ?? []
   );
-  const newCategoryName = useAtomValue(newCategoryNameAtom);
+
+  const handleClickCategory = (categoryId: number) => {
+    // 카테고리 이름 수정 중일 때는 다른 카테고리로 이동 불가
+    if (isEditingCategoryName) return;
+    setSelectedCategoryid(categoryId);
+  };
 
   /**
    * 새로운 카테고리를 생성하여 반환
@@ -102,7 +110,7 @@ export const EditIcons = ({ selectedCategoryId }: EditIconsProps) => {
 
     // TODO: 정말 삭제하시겠습니까 alert
     setCategoryData(deleteCategory(categoryData));
-    setCategoryIdToRegister(0);
+    setSelectedCategoryid(0);
   };
 
   /**
@@ -180,39 +188,103 @@ export const EditIcons = ({ selectedCategoryId }: EditIconsProps) => {
     if (isEditingCategoryName) {
       // TODO: 카테고리 이름 업데이트 api 요청
       // TODO: validation
-      console.log(newCategoryName);
       setIsEditingCategoryName(false);
     } else {
       setIsEditingCategoryName(true);
     }
   };
 
-  if (selectedCategoryId === 0)
-    return (
-      <IconsWrapper>
-        <Text $pointer={true} onClick={handleClickPlus}>
-          <GoPlus />
+  const handleSubmit = () => {};
+
+  /**
+   * 카테고리 목록을 받아 JSX를 반환
+   *
+   * @param {TCategory[]} categoryList 카테고리 목록
+   * @returns children(하위 카테고리)이 있는 경우 하위 카테고리를 포함하여 JSX elements를 반환
+   */
+  const renderCategory = (categoryList: TCategory[]) =>
+    categoryList.map(({ categoryId, name, cnt, children }) => {
+      const isSelected = categoryId === selectedCategoryId;
+
+      return (
+        <Fragment key={categoryId}>
+          <CategoryDiv $isSelected={isSelected} type="edit">
+            {isSelected && isEditingCategoryName ? (
+              <input
+                defaultValue={name}
+                value={newCategoryName}
+                onChange={(e) => setNewCategoryName(e.target.value)}
+                autoFocus
+              />
+            ) : (
+              <Text
+                $pointer={true}
+                onClick={() => handleClickCategory(categoryId)}
+              >{`${name} (${cnt})`}</Text>
+            )}
+            {isSelected && (
+              <IconsWrapper>
+                <Text $pointer={true} onClick={handleClickPlus}>
+                  <GoPlus />
+                </Text>
+                {selectedCategoryId !== 0 && (
+                  <>
+                    <Text $pointer={true} onClick={handleClickMinus}>
+                      <HiMinusSmall />
+                    </Text>
+                    <Text $pointer={true} onClick={handleClickUp}>
+                      <GoChevronUp />
+                    </Text>
+                    <Text $pointer={true} onClick={handleClickDown}>
+                      <GoChevronDown />
+                    </Text>
+                    <Text $pointer={true} onClick={handleClickEdit}>
+                      {isEditingCategoryName ? <BiSave /> : <AiOutlineEdit />}
+                    </Text>
+                  </>
+                )}
+              </IconsWrapper>
+            )}
+          </CategoryDiv>
+          {children && (
+            <FlexDiv
+              direction="column"
+              $align="start"
+              style={{ paddingLeft: "1rem" }}
+            >
+              {renderCategory(children)}
+            </FlexDiv>
+          )}
+        </Fragment>
+      );
+    });
+
+  return (
+    <CategoryWrapperEditForm onSubmit={handleSubmit}>
+      <FlexDiv $gap={3}>
+        <Text $bold={true}>카테고리 수정</Text>
+        <Text
+          $bold={true}
+          size={0.75}
+          $pointer={true}
+          onClick={() => setEditCategory(false)}
+          // onClick={() => isEditingCategoryName || setType("register")}
+        >
+          완료
         </Text>
-      </IconsWrapper>
-    );
-  else
-    return (
-      <IconsWrapper>
-        <Text $pointer={true} onClick={handleClickPlus}>
-          <GoPlus />
+        <Text
+          $bold={true}
+          size={0.75}
+          $pointer={true}
+          onClick={() => setEditCategory(false)}
+          // onClick={() => isEditingCategoryName || setType("register")}
+        >
+          취소
         </Text>
-        <Text $pointer={true} onClick={handleClickMinus}>
-          <HiMinusSmall />
-        </Text>
-        <Text $pointer={true} onClick={handleClickUp}>
-          <GoChevronUp />
-        </Text>
-        <Text $pointer={true} onClick={handleClickDown}>
-          <GoChevronDown />
-        </Text>
-        <Text $pointer={true} onClick={handleClickEdit}>
-          {isEditingCategoryName ? <BiSave /> : <AiOutlineEdit />}
-        </Text>
-      </IconsWrapper>
-    );
-};
+      </FlexDiv>
+      <CategoryWrapperRegister>
+        {renderCategory(categoryData)}
+      </CategoryWrapperRegister>
+    </CategoryWrapperEditForm>
+  );
+}
