@@ -2,23 +2,21 @@ import { categoryType } from "@features/blog/types";
 import { COLORS } from "@styles/colors";
 import { css, styled } from "styled-components";
 
-// 포스트 목록 페이지 wrapper
-const CategoryWrapper = styled.form`
+export const CategoryWrapperInquire = styled.nav`
   width: 17vw;
   height: calc(100vh - var(--nav-height));
   position: fixed;
   padding: 2rem 0 0 0.5rem;
 `;
 
-// 포스트 등록 페이지 wrapper
-const CategoryEditWrapper = styled.div`
+export const CategoryWrapperRegister = styled.div`
   display: flex;
   flex-direction: column;
   width: fit-content;
   padding-right: 1rem;
 `;
 
-const CategoryDiv = styled.div<{
+export const CategoryDiv = styled.div<{
   $isSelected: boolean;
   type: categoryType;
 }>`
@@ -102,11 +100,9 @@ const CategoryDiv = styled.div<{
       : ""}
 `;
 
-const IconsWrapper = styled.div`
+export const IconsWrapper = styled.div`
   display: flex;
   gap: 0.5rem;
   position: absolute;
   left: calc(100% + 1.5rem);
 `;
-
-export { CategoryWrapper, CategoryEditWrapper, CategoryDiv, IconsWrapper };
