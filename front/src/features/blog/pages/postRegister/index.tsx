@@ -1,27 +1,19 @@
-import { useState } from "react";
-
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 import { PostPostReq, usePostPost } from "@features/blog/api";
 import { Category } from "@features/blog/components";
-import {
-  categoryIdToRegisterAtom,
-  isEditingCategoryNameAtom,
-} from "@features/blog/store";
-import { categoryType } from "@features/blog/types";
+import { categoryIdToRegisterAtom } from "@features/blog/store";
 import { PATH } from "@router/path";
 import { useAtomValue } from "jotai";
 
 import { FlexDiv, Text } from "@components/elements";
 import { MDEditor } from "@components/markdownEditor";
 
-import { CategoryWrapper, PostButton, PostRegisterInput } from "./style";
+import { PostButton, PostRegisterForm, PostRegisterInput } from "./style";
 
 export const PostRegister = () => {
-  const [type, setType] = useState<Exclude<categoryType, "list">>("register");
   const categoryIdToRegister = useAtomValue(categoryIdToRegisterAtom);
-  const isEditingCategoryName = useAtomValue(isEditingCategoryNameAtom);
   const navigate = useNavigate();
   const {
     register,
@@ -45,7 +37,7 @@ export const PostRegister = () => {
   };
 
   return (
-    <CategoryWrapper onSubmit={handleSubmit(onSubmit)}>
+    <PostRegisterForm onSubmit={handleSubmit(onSubmit)}>
       <FlexDiv direction="column" $align="start" $gap={1} $pWidth={70}>
         <FlexDiv $pWidth={100}>
           <Text $bold={true}>제목</Text>
@@ -109,7 +101,7 @@ export const PostRegister = () => {
         $align="start"
         $pWidth={30}
       >
-        <FlexDiv direction="column" $gap={1} $align="start">
+        {/* <FlexDiv direction="column" $gap={1} $align="start">
           <FlexDiv $gap={3}>
             <Text $bold={true}>카테고리 선택</Text>
             {type === "register" ? (
@@ -142,10 +134,11 @@ export const PostRegister = () => {
               </>
             )}
           </FlexDiv>
-          <Category type={type} />
-        </FlexDiv>
+          <CategoryEdit type={type} />
+        </FlexDiv> */}
+        <Category type="register" />
         <PostButton type="submit">Post</PostButton>
       </FlexDiv>
-    </CategoryWrapper>
+    </PostRegisterForm>
   );
 };

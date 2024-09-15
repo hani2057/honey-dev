@@ -1,7 +1,7 @@
 import { COLORS } from "@styles/colors";
 import { styled } from "styled-components";
 
-const CategoryWrapper = styled.form`
+const PostRegisterForm = styled.form`
   display: flex;
   min-height: calc(100vh - var(--nav-height));
   padding: 2rem 3rem;
@@ -31,4 +31,4 @@ const PostRegisterInput = styled.input`
   }
 `;
 
-export { CategoryWrapper, PostButton, PostRegisterInput };
+export { PostRegisterForm, PostButton, PostRegisterInput };
