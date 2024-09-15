@@ -68,16 +68,13 @@ const dummyCategories: TCategory[] = [
   },
 ];
 
+// 포스트 목록, 포스트 상세 화면 좌측 카테고리 목록 조회시 사용할 카테고리 id
 export const categoryIdToShowAtom = atom(0);
 
-export const categoryIdToRegisterAtom = atom(0, (get, set, newId) => {
-  // 카테고리 이름 수정 중일 때는 다른 카테고리로 이동 불가
-  if (get(isEditingCategoryNameAtom)) return;
-  set(categoryIdToRegisterAtom, newId);
-});
+// 포스트 등록시 사용할 카테고리 id
+export const categoryIdToRegisterAtom = atom(0);
 
 export const categoriesAtom = atom(dummyCategories);
 
+// 카테고리 수정시 사용할 이름 변경 여부 플래그
 export const isEditingCategoryNameAtom = atom(false);
-
-export const newCategoryNameAtom = atom("");
