@@ -11,3 +11,8 @@ export interface IPostCategory {
   parentId: number;
   newCategory: ICategory;
 }
+
+export interface IPutCategoryName {
+  categoryId: number;
+  name: string;
+}
