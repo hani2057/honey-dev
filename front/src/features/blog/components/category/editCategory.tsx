@@ -5,7 +5,7 @@ import { BiSave } from "react-icons/bi";
 import { GoChevronDown, GoChevronUp, GoPlus } from "react-icons/go";
 import { HiMinusSmall } from "react-icons/hi2";
 
-import { usePostCategoryList } from "@features/blog/api";
+import { usePostCategories } from "@features/blog/api";
 import { ICategory, IPostCategory } from "@features/blog/types";
 import { useQueryClient } from "@tanstack/react-query";
 
@@ -26,20 +26,18 @@ interface EditCategoryProps {
 
 export function EditCategory({ setEditCategory }: EditCategoryProps) {
   const queryClient = useQueryClient();
-  const [selectedCategoryId, setSelectedCategoryid] = useState(0);
-  const [isEditingCategoryName, setIsEditingCategoryName] = useState(false);
+  const [selectedId, setSelectedId] = useState(0);
+  const [isEditingName, setIsEditingName] = useState(false);
   const [newCategoryName, setNewCategoryName] = useState("");
   const [categoryData, setCategoryData] = useState<ICategory[]>(
     queryClient.getQueryData(QUERY_KEY.blog.category.list()) ?? []
   );
-  const [createdCategories, setCreatedCategories] = useState<IPostCategory[]>(
-    []
-  );
+  const [createdList, setCreatedList] = useState<IPostCategory[]>([]);
 
   const handleClickCategory = (categoryId: number) => {
     // 카테고리 이름 수정 중일 때는 다른 카테고리로 이동 불가
-    if (isEditingCategoryName) return;
-    setSelectedCategoryid(categoryId);
+    if (isEditingName) return;
+    setSelectedId(categoryId);
   };
 
   /**
@@ -49,7 +47,7 @@ export function EditCategory({ setEditCategory }: EditCategoryProps) {
    * @returns 처리된 카테고리
    */
   const addNewChild = (category: ICategory, newCategory: ICategory) => {
-    if (category.categoryId === selectedCategoryId) {
+    if (category.categoryId === selectedId) {
       category.children = category.children
         ? [...category.children, newCategory]
         : [newCategory];
@@ -71,10 +69,7 @@ export function EditCategory({ setEditCategory }: EditCategoryProps) {
       cnt: 0,
       children: null,
     };
-    setCreatedCategories((prev) => [
-      ...prev,
-      { parentId: selectedCategoryId, newCategory },
-    ]);
+    setCreatedList((prev) => [...prev, { parentId: selectedId, newCategory }]);
     setCategoryData(
       categoryData.map((category) => addNewChild(category, newCategory))
     );
@@ -87,7 +82,7 @@ export function EditCategory({ setEditCategory }: EditCategoryProps) {
     const deleteCategory = (categories: ICategory[]) => {
       // 카테고리 리스트에서 해당 카테고리 아이디를 찾는다
       const categoryToDelete = categories.find(
-        ({ categoryId }) => categoryId === selectedCategoryId
+        ({ categoryId }) => categoryId === selectedId
       );
       // 있으면 삭제하고 리턴
       if (categoryToDelete) {
@@ -107,7 +102,7 @@ export function EditCategory({ setEditCategory }: EditCategoryProps) {
 
     // TODO: 정말 삭제하시겠습니까 alert
     setCategoryData(deleteCategory(categoryData));
-    setSelectedCategoryid(0);
+    setSelectedId(0);
   };
 
   /**
@@ -117,7 +112,7 @@ export function EditCategory({ setEditCategory }: EditCategoryProps) {
     const moveCategoryUp = (categories: ICategory[]) => {
       // 카테고리 리스트에서 해당 카테고리 아이디를 찾는다
       const categoryToMove = categories.find(
-        ({ categoryId }) => categoryId === selectedCategoryId
+        ({ categoryId }) => categoryId === selectedId
       );
       // 있으면 인덱스를 찾아 -1 이동한다
       if (categoryToMove) {
@@ -151,7 +146,7 @@ export function EditCategory({ setEditCategory }: EditCategoryProps) {
     const moveCategoryDown = (categories: ICategory[]) => {
       // 카테고리 리스트에서 해당 카테고리 아이디를 찾는다
       const categoryToMove = categories.find(
-        ({ categoryId }) => categoryId === selectedCategoryId
+        ({ categoryId }) => categoryId === selectedId
       );
       // 있으면 인덱스를 찾아 +1 이동한다
       if (categoryToMove) {
@@ -182,24 +177,26 @@ export function EditCategory({ setEditCategory }: EditCategoryProps) {
    * 카테고리 이름을 수정 가능한 상태로 바꾸거나 바꾼 값을 새 카테고리 이름으로 업데이트
    */
   const handleClickEdit = () => {
-    if (isEditingCategoryName) {
+    if (isEditingName) {
       // TODO: 카테고리 이름 업데이트 api 요청
       // TODO: validation
-      setIsEditingCategoryName(false);
+      setIsEditingName(false);
     } else {
-      setIsEditingCategoryName(true);
+      setIsEditingName(true);
     }
   };
 
   const handleSubmit = async () => {
-    if (isEditingCategoryName) return;
+    if (isEditingName) return;
     // 카테고리 생성
-    const res = await postCategories(createdCategories);
-    console.log("postCategory res", res);
+    if (createdList.length !== 0) {
+      const res = await postCategories(createdList);
+      console.log("postCategory res", res);
+    }
     // 서비스콜 완료 후 카테고리 상태를 최신으로 업데이트
     queryClient.invalidateQueries({ queryKey: QUERY_KEY.blog.category.list() });
     // 로컬의 카테고리 수정용 상태값들을 초기화
-    setCreatedCategories([]);
+    setCreatedList([]);
     // 카테고리 수정창 닫기
     setEditCategory(false);
   };
@@ -212,12 +209,12 @@ export function EditCategory({ setEditCategory }: EditCategoryProps) {
    */
   const renderCategory = (categoryList: ICategory[]) =>
     categoryList.map(({ categoryId, name, cnt, children }) => {
-      const isSelected = categoryId === selectedCategoryId;
+      const isSelected = categoryId === selectedId;
 
       return (
         <Fragment key={categoryId}>
           <CategoryDiv $isSelected={isSelected} type="edit">
-            {isSelected && isEditingCategoryName ? (
+            {isSelected && isEditingName ? (
               <input
                 defaultValue={name}
                 value={newCategoryName}
@@ -235,7 +232,7 @@ export function EditCategory({ setEditCategory }: EditCategoryProps) {
                 <Text $pointer={true} onClick={handleClickPlus}>
                   <GoPlus />
                 </Text>
-                {selectedCategoryId !== 0 && (
+                {selectedId !== 0 && (
                   <>
                     <Text $pointer={true} onClick={handleClickMinus}>
                       <HiMinusSmall />
@@ -247,7 +244,7 @@ export function EditCategory({ setEditCategory }: EditCategoryProps) {
                       <GoChevronDown />
                     </Text>
                     <Text $pointer={true} onClick={handleClickEdit}>
-                      {isEditingCategoryName ? <BiSave /> : <AiOutlineEdit />}
+                      {isEditingName ? <BiSave /> : <AiOutlineEdit />}
                     </Text>
                   </>
                 )}
@@ -267,7 +264,7 @@ export function EditCategory({ setEditCategory }: EditCategoryProps) {
       );
     });
 
-  const { mutateAsync: postCategories } = usePostCategoryList();
+  const { mutateAsync: postCategories } = usePostCategories();
 
   return (
     <CategoryWrapperEditForm onSubmit={handleSubmit}>
@@ -287,7 +284,7 @@ export function EditCategory({ setEditCategory }: EditCategoryProps) {
           size={0.75}
           $pointer={true}
           onClick={() => setEditCategory(false)}
-          // onClick={() => isEditingCategoryName || setType("register")}
+          // onClick={() => isEditingName || setType("register")}
         >
           취소
         </Text>

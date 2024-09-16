@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 
-import { useGetCategories } from "@features/blog/api";
+import { useGetCategoryList } from "@features/blog/api";
 import { ICategory, TCategory } from "@features/blog/types";
 
 import { FlexDiv, Text } from "@components/elements";
@@ -48,8 +48,8 @@ export function RenderCategory({
         </Fragment>
       );
     });
-  const { data: categories } = useGetCategories();
-  if (!categories) return;
+  const { data: categoryList } = useGetCategoryList();
+  if (!categoryList) return;
 
-  return renderCategory(categories);
+  return renderCategory(categoryList);
 }

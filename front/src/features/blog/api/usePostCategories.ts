@@ -5,15 +5,13 @@ import { QUERY_KEY } from "@apis/queryKeys";
 
 import { IPostCategory } from "../types";
 
-type PostCategoryListReq = IPostCategory[];
-
 type PostCategoryListRes = {
   prevId: number;
   createdId: number;
 }[];
 
-const postCategoryList = async (
-  data: PostCategoryListReq
+const postCategories = async (
+  data: IPostCategory[]
 ): Promise<PostCategoryListRes> => {
   console.log("post category data", data);
   return data.map((category) => ({
@@ -23,9 +21,9 @@ const postCategoryList = async (
   return await axios.post("blog/category", data);
 };
 
-export const usePostCategoryList = () => {
+export const usePostCategories = () => {
   return useMutation({
     mutationKey: QUERY_KEY.blog.category.post(),
-    mutationFn: postCategoryList,
+    mutationFn: postCategories,
   });
 };
