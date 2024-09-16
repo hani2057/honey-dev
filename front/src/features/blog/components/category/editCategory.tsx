@@ -5,7 +5,7 @@ import { BiSave } from "react-icons/bi";
 import { GoChevronDown, GoChevronUp, GoPlus } from "react-icons/go";
 import { HiMinusSmall } from "react-icons/hi2";
 
-import { usePostCategories } from "@features/blog/api";
+import { useDeleteCategories, usePostCategories } from "@features/blog/api";
 import { ICategory, IPostCategory } from "@features/blog/types";
 import { useQueryClient } from "@tanstack/react-query";
 
@@ -33,6 +33,7 @@ export function EditCategory({ setEditCategory }: EditCategoryProps) {
     queryClient.getQueryData(QUERY_KEY.blog.category.list()) ?? []
   );
   const [createdList, setCreatedList] = useState<IPostCategory[]>([]);
+  const [deletedList, setDeletedList] = useState<number[]>([]);
 
   const handleClickCategory = (categoryId: number) => {
     // 카테고리 이름 수정 중일 때는 다른 카테고리로 이동 불가
@@ -76,32 +77,45 @@ export function EditCategory({ setEditCategory }: EditCategoryProps) {
   };
 
   /**
+   * 카테고리 목록을 받아 selectedId에 해당하는 카테고리를 제거해 반환
+   */
+  const deleteCategory = (categories: ICategory[]) => {
+    return categories.reduce<ICategory[]>((acc, category) => {
+      // 현재 카테고리가 삭제 대상이면 skip
+      if (category.categoryId === selectedId) {
+        return acc;
+      }
+      // children이 있을 경우, 재귀적으로 처리하여 삭제 후 업데이트
+      if (category.children) {
+        category.children = deleteCategory(category.children);
+      }
+      // 삭제되지 않은 카테고리를 결과 배열에 추가
+      acc.push(category);
+      return acc;
+    }, []);
+  };
+
+  /**
    * 선택한 카테고리를 삭제
    */
   const handleClickMinus = () => {
-    const deleteCategory = (categories: ICategory[]) => {
-      // 카테고리 리스트에서 해당 카테고리 아이디를 찾는다
-      const categoryToDelete = categories.find(
-        ({ categoryId }) => categoryId === selectedId
-      );
-      // 있으면 삭제하고 리턴
-      if (categoryToDelete) {
-        return categories.filter(
-          ({ categoryId }) => categoryId !== categoryToDelete.categoryId
-        );
-      }
-      // 없으면 children에 대해 반복
-      else {
-        return categories.map((category) => {
-          if (category.children)
-            category.children = deleteCategory(category.children);
-          return category;
-        });
-      }
-    };
-
     // TODO: 정말 삭제하시겠습니까 alert
-    setCategoryData(deleteCategory(categoryData));
+
+    // 생성한 카테고리 목록에 삭제할 카테고리가 있는지 확인하여 있으면 삭제
+    const isCreated = createdList.some(
+      (v) => v.newCategory.categoryId === selectedId
+    );
+    if (isCreated) {
+      setCreatedList(
+        createdList.filter((v) => v.newCategory.categoryId !== selectedId)
+      );
+    }
+    // 없으면 기존 카테고리 목록에서 삭제
+    else {
+      setDeletedList((prev) => [...prev, selectedId]);
+      setCategoryData(deleteCategory(categoryData));
+    }
+
     setSelectedId(0);
   };
 
@@ -193,6 +207,10 @@ export function EditCategory({ setEditCategory }: EditCategoryProps) {
       const res = await postCategories(createdList);
       console.log("postCategory res", res);
     }
+    // 카테고리 삭제
+    if (deletedList.length !== 0) {
+      await deleteCategories(deletedList);
+    }
     // 서비스콜 완료 후 카테고리 상태를 최신으로 업데이트
     queryClient.invalidateQueries({ queryKey: QUERY_KEY.blog.category.list() });
     // 로컬의 카테고리 수정용 상태값들을 초기화
@@ -265,6 +283,7 @@ export function EditCategory({ setEditCategory }: EditCategoryProps) {
     });
 
   const { mutateAsync: postCategories } = usePostCategories();
+  const { mutateAsync: deleteCategories } = useDeleteCategories();
 
   return (
     <CategoryWrapperEditForm onSubmit={handleSubmit}>
