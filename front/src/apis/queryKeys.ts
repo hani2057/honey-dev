@@ -11,6 +11,7 @@ export const QUERY_KEY = {
       all: () => [...QUERY_KEY.blog.all(), "category"],
       list: () => [...QUERY_KEY.blog.category.all(), "list"],
       post: () => [...QUERY_KEY.blog.category.all(), "post"],
+      delete: () => [...QUERY_KEY.blog.category.all(), "delete"],
     },
   },
 };
