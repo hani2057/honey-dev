@@ -3,9 +3,9 @@ import { useQuery } from "@tanstack/react-query";
 
 import { QUERY_KEY } from "@apis/queryKeys";
 
-import { TCategory } from "../types";
+import { ICategory } from "../types";
 
-const getCategories = async (): Promise<TCategory[]> => {
+const getCategories = async (): Promise<ICategory[]> => {
   // 더미데이터
   // TODO: API 연동 후 데이터 교체
   const res = {
