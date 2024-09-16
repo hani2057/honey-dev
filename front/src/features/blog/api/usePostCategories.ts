@@ -1,8 +1,6 @@
 import { axios } from "@lib/axios";
 import { useMutation } from "@tanstack/react-query";
 
-import { QUERY_KEY } from "@apis/queryKeys";
-
 import { IPostCategory } from "../types";
 
 type PostCategoryListRes = {
@@ -23,7 +21,6 @@ const postCategories = async (
 
 export const usePostCategories = () => {
   return useMutation({
-    mutationKey: QUERY_KEY.blog.category.post(),
     mutationFn: postCategories,
   });
 };
