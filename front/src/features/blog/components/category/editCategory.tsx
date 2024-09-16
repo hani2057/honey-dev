@@ -6,7 +6,12 @@ import { GoChevronDown, GoChevronUp, GoPlus } from "react-icons/go";
 import { HiMinusSmall } from "react-icons/hi2";
 
 import { useDeleteCategories, usePostCategories } from "@features/blog/api";
-import { ICategory, IPostCategory } from "@features/blog/types";
+import { usePutCategoryNames } from "@features/blog/api/usePutCategoryNames";
+import {
+  ICategory,
+  IPostCategory,
+  IPutCategoryName,
+} from "@features/blog/types";
 import { useQueryClient } from "@tanstack/react-query";
 
 import { QUERY_KEY } from "@apis/queryKeys";
@@ -34,6 +39,9 @@ export function EditCategory({ setEditCategory }: EditCategoryProps) {
   );
   const [createdList, setCreatedList] = useState<IPostCategory[]>([]);
   const [deletedList, setDeletedList] = useState<number[]>([]);
+  const [nameChangedList, setNameChangedList] = useState<IPutCategoryName[]>(
+    []
+  );
 
   const handleClickCategory = (categoryId: number) => {
     // 카테고리 이름 수정 중일 때는 다른 카테고리로 이동 불가
@@ -187,13 +195,51 @@ export function EditCategory({ setEditCategory }: EditCategoryProps) {
     setCategoryData([categoryData[0], ...newCategoryData]);
   };
 
+  const changeName = (categories: ICategory[]) =>
+    categories.map((v) => {
+      if (v.categoryId === selectedId) {
+        v.name = newCategoryName;
+      }
+      if (v.children) {
+        v.children = changeName(v.children);
+      }
+      return v;
+    });
+
   /**
    * 카테고리 이름을 수정 가능한 상태로 바꾸거나 바꾼 값을 새 카테고리 이름으로 업데이트
    */
   const handleClickEdit = () => {
     if (isEditingName) {
-      // TODO: 카테고리 이름 업데이트 api 요청
-      // TODO: validation
+      if (newCategoryName.trim().length === 0) return;
+      // 생성 목록에 있으면 업데이트
+      setCreatedList(
+        createdList.map((v) => {
+          if (v.newCategory.categoryId === selectedId)
+            v.newCategory.name = newCategoryName;
+          return v;
+        })
+      );
+      // 이름 변경 목록에 있으면 업데이트, 없으면 추가
+      const isChanged = nameChangedList.some(
+        (v) => v.categoryId === selectedId
+      );
+      if (isChanged) {
+        setNameChangedList(
+          nameChangedList.map((v) => {
+            if (v.categoryId === selectedId) v.name = newCategoryName;
+            return v;
+          })
+        );
+      } else {
+        setNameChangedList((prev) => [
+          ...prev,
+          { categoryId: selectedId, name: newCategoryName },
+        ]);
+      }
+      // 공통: 표시 데이터 업데이트
+      setCategoryData(changeName(categoryData));
+      setNewCategoryName("");
       setIsEditingName(false);
     } else {
       setIsEditingName(true);
@@ -211,10 +257,25 @@ export function EditCategory({ setEditCategory }: EditCategoryProps) {
     if (deletedList.length !== 0) {
       await deleteCategories(deletedList);
     }
+    // 카테고리 이름 변경
+    if (nameChangedList.length !== 0) {
+      await putCategoryNames(nameChangedList);
+    }
     // 서비스콜 완료 후 카테고리 상태를 최신으로 업데이트
     queryClient.invalidateQueries({ queryKey: QUERY_KEY.blog.category.list() });
     // 로컬의 카테고리 수정용 상태값들을 초기화
     setCreatedList([]);
+    setDeletedList([]);
+    setNameChangedList([]);
+    // 카테고리 수정창 닫기
+    setEditCategory(false);
+  };
+
+  const handleCancel = () => {
+    // 로컬의 카테고리 수정용 상태값들을 초기화
+    setCreatedList([]);
+    setDeletedList([]);
+    setNameChangedList([]);
     // 카테고리 수정창 닫기
     setEditCategory(false);
   };
@@ -235,7 +296,6 @@ export function EditCategory({ setEditCategory }: EditCategoryProps) {
             {isSelected && isEditingName ? (
               <input
                 defaultValue={name}
-                value={newCategoryName}
                 onChange={(e) => setNewCategoryName(e.target.value)}
                 autoFocus
               />
@@ -284,6 +344,7 @@ export function EditCategory({ setEditCategory }: EditCategoryProps) {
 
   const { mutateAsync: postCategories } = usePostCategories();
   const { mutateAsync: deleteCategories } = useDeleteCategories();
+  const { mutateAsync: putCategoryNames } = usePutCategoryNames();
 
   return (
     <CategoryWrapperEditForm onSubmit={handleSubmit}>
@@ -298,13 +359,7 @@ export function EditCategory({ setEditCategory }: EditCategoryProps) {
         >
           완료
         </Text>
-        <Text
-          $bold={true}
-          size={0.75}
-          $pointer={true}
-          onClick={() => setEditCategory(false)}
-          // onClick={() => isEditingName || setType("register")}
-        >
+        <Text $bold={true} size={0.75} $pointer={true} onClick={handleCancel}>
           취소
         </Text>
       </FlexDiv>
