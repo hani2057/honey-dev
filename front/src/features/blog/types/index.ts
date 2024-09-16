@@ -1,8 +1,8 @@
-export interface TCategory {
+export type TCategory = "list" | "register" | "edit";
+
+export interface ICategory {
   categoryId: number;
   name: string;
   cnt: number;
-  children: TCategory[] | null;
+  children: ICategory[] | null;
 }
-
-export type categoryType = "list" | "register" | "edit";

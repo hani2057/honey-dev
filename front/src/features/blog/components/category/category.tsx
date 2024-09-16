@@ -4,7 +4,7 @@ import {
   categoryIdToRegisterAtom,
   categoryIdToShowAtom,
 } from "@features/blog/store";
-import { categoryType } from "@features/blog/types";
+import { TCategory } from "@features/blog/types";
 import { PATH } from "@router/path";
 import { useAtom } from "jotai";
 
@@ -12,7 +12,7 @@ import { RenderCategory } from "./renderCategory";
 import { CategoryWrapperInquire, CategoryWrapperRegister } from "./style";
 
 interface CategoryProps {
-  type: Extract<categoryType, "list" | "register">;
+  type: Extract<TCategory, "list" | "register">;
 }
 
 export function Category({ type }: CategoryProps) {
