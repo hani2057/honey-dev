@@ -10,6 +10,7 @@ export const QUERY_KEY = {
     category: {
       all: () => [...QUERY_KEY.blog.all(), "category"],
       list: () => [...QUERY_KEY.blog.category.all(), "list"],
+      post: () => [...QUERY_KEY.blog.category.all(), "post"],
     },
   },
 };
