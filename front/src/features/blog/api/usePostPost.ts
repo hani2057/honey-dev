@@ -1,8 +1,6 @@
 import { axios } from "@lib/axios";
 import { useMutation } from "@tanstack/react-query";
 
-import { QUERY_KEY } from "@apis/queryKeys";
-
 export type PostPostReq = {
   title: string; // 제목 (null, 빈 문자열 불가능)
   subtitle: string; // 부제 (null 가능)
@@ -23,7 +21,6 @@ const postPost = async (data: PostPostReq): Promise<PostPostRes> => {
 
 export const usePostPost = () => {
   return useMutation({
-    mutationKey: QUERY_KEY.blog.post(),
     mutationFn: (data: PostPostReq) => postPost(data),
   });
 };
