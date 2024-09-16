@@ -5,7 +5,7 @@ import { QUERY_KEY } from "@apis/queryKeys";
 
 import { ICategory } from "../types";
 
-const getCategories = async (): Promise<ICategory[]> => {
+const getCategoryList = async (): Promise<ICategory[]> => {
   // 더미데이터
   // TODO: API 연동 후 데이터 교체
   const res = {
@@ -79,9 +79,9 @@ const getCategories = async (): Promise<ICategory[]> => {
   return (await axios.get("/blog/category")).data;
 };
 
-export const useGetCategories = () => {
+export const useGetCategoryList = () => {
   return useQuery({
     queryKey: QUERY_KEY.blog.category.list(),
-    queryFn: getCategories,
+    queryFn: getCategoryList,
   });
 };
