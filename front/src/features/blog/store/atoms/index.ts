@@ -1,9 +1,9 @@
-import { TCategory } from "@features/blog/types";
+import { ICategory } from "@features/blog/types";
 import { atom } from "jotai";
 
 // 더미데이터
 // TODO: API 연동 후 데이터 교체
-const dummyCategories: TCategory[] = [
+const dummyCategories: ICategory[] = [
   {
     categoryId: 0,
     name: "All", // 카테고리명
