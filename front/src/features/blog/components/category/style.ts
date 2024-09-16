@@ -1,4 +1,4 @@
-import { categoryType } from "@features/blog/types";
+import { TCategory } from "@features/blog/types";
 import { COLORS } from "@styles/colors";
 import { css, styled } from "styled-components";
 
@@ -34,7 +34,7 @@ export const CategoryWrapperEditForm = styled.form`
 
 export const CategoryDiv = styled.div<{
   $isSelected: boolean;
-  type: categoryType;
+  type: TCategory;
 }>`
   width: ${({ type }) => (type === "list" ? "100%" : "fit-content")};
   height: 2.5rem;
