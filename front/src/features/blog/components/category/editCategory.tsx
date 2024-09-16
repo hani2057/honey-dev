@@ -5,7 +5,7 @@ import { BiSave } from "react-icons/bi";
 import { GoChevronDown, GoChevronUp, GoPlus } from "react-icons/go";
 import { HiMinusSmall } from "react-icons/hi2";
 
-import { TCategory } from "@features/blog/types";
+import { ICategory } from "@features/blog/types";
 import { useQueryClient } from "@tanstack/react-query";
 
 import { QUERY_KEY } from "@apis/queryKeys";
@@ -28,7 +28,7 @@ export function EditCategory({ setEditCategory }: EditCategoryProps) {
   const [selectedCategoryId, setSelectedCategoryid] = useState(0);
   const [isEditingCategoryName, setIsEditingCategoryName] = useState(false);
   const [newCategoryName, setNewCategoryName] = useState("");
-  const [categoryData, setCategoryData] = useState<TCategory[]>(
+  const [categoryData, setCategoryData] = useState<ICategory[]>(
     queryClient.getQueryData(QUERY_KEY.blog.category.list()) ?? []
   );
 
@@ -41,7 +41,7 @@ export function EditCategory({ setEditCategory }: EditCategoryProps) {
   /**
    * 새로운 카테고리를 생성하여 반환
    *
-   * @returns {TCategory} 새로 생성된 카테고리
+   * @returns {ICategory} 새로 생성된 카테고리
    */
   const createNewCategory = () => {
     // TODO: 취소할 때를 대비해서 createdCategoryId 저장해두기
@@ -59,7 +59,7 @@ export function EditCategory({ setEditCategory }: EditCategoryProps) {
    */
   const handleClickPlus = () => {
     const newCategory = createNewCategory();
-    const addNewChild = (category: TCategory) => {
+    const addNewChild = (category: ICategory) => {
       if (category.children === null) {
         if (category.categoryId === selectedCategoryId) {
           category.children = [newCategory];
@@ -87,7 +87,7 @@ export function EditCategory({ setEditCategory }: EditCategoryProps) {
    * 선택한 카테고리를 삭제
    */
   const handleClickMinus = () => {
-    const deleteCategory = (categories: TCategory[]) => {
+    const deleteCategory = (categories: ICategory[]) => {
       // 카테고리 리스트에서 해당 카테고리 아이디를 찾는다
       const categoryToDelete = categories.find(
         ({ categoryId }) => categoryId === selectedCategoryId
@@ -117,7 +117,7 @@ export function EditCategory({ setEditCategory }: EditCategoryProps) {
    * 선택한 카테고리를 한 칸 위로 이동. 배열 내 인덱스 -1
    */
   const handleClickUp = () => {
-    const moveCategoryUp = (categories: TCategory[]) => {
+    const moveCategoryUp = (categories: ICategory[]) => {
       // 카테고리 리스트에서 해당 카테고리 아이디를 찾는다
       const categoryToMove = categories.find(
         ({ categoryId }) => categoryId === selectedCategoryId
@@ -151,7 +151,7 @@ export function EditCategory({ setEditCategory }: EditCategoryProps) {
    * 선택한 카테고리를 한 칸 아래로 이동. 배열 내 인덱스 +1
    */
   const handleClickDown = () => {
-    const moveCategoryDown = (categories: TCategory[]) => {
+    const moveCategoryDown = (categories: ICategory[]) => {
       // 카테고리 리스트에서 해당 카테고리 아이디를 찾는다
       const categoryToMove = categories.find(
         ({ categoryId }) => categoryId === selectedCategoryId
@@ -199,10 +199,10 @@ export function EditCategory({ setEditCategory }: EditCategoryProps) {
   /**
    * 카테고리 목록을 받아 JSX를 반환
    *
-   * @param {TCategory[]} categoryList 카테고리 목록
+   * @param {ICategory[]} categoryList 카테고리 목록
    * @returns children(하위 카테고리)이 있는 경우 하위 카테고리를 포함하여 JSX elements를 반환
    */
-  const renderCategory = (categoryList: TCategory[]) =>
+  const renderCategory = (categoryList: ICategory[]) =>
     categoryList.map(({ categoryId, name, cnt, children }) => {
       const isSelected = categoryId === selectedCategoryId;
 
