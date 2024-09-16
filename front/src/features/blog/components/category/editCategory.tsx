@@ -5,7 +5,8 @@ import { BiSave } from "react-icons/bi";
 import { GoChevronDown, GoChevronUp, GoPlus } from "react-icons/go";
 import { HiMinusSmall } from "react-icons/hi2";
 
-import { ICategory } from "@features/blog/types";
+import { usePostCategoryList } from "@features/blog/api";
+import { ICategory, IPostCategory } from "@features/blog/types";
 import { useQueryClient } from "@tanstack/react-query";
 
 import { QUERY_KEY } from "@apis/queryKeys";
@@ -31,6 +32,9 @@ export function EditCategory({ setEditCategory }: EditCategoryProps) {
   const [categoryData, setCategoryData] = useState<ICategory[]>(
     queryClient.getQueryData(QUERY_KEY.blog.category.list()) ?? []
   );
+  const [createdCategories, setCreatedCategories] = useState<IPostCategory[]>(
+    []
+  );
 
   const handleClickCategory = (categoryId: number) => {
     // 카테고리 이름 수정 중일 때는 다른 카테고리로 이동 불가
@@ -39,48 +43,41 @@ export function EditCategory({ setEditCategory }: EditCategoryProps) {
   };
 
   /**
-   * 새로운 카테고리를 생성하여 반환
-   *
-   * @returns {ICategory} 새로 생성된 카테고리
+   * 현재 선택된 카테고리를 탐색하여 하위에 새로운 카테고리를 생성하여 반환
+   * @param category 탐색할 카테고리
+   * @param newCategory 새로 생성한 카테고리
+   * @returns 처리된 카테고리
    */
-  const createNewCategory = () => {
-    // TODO: 취소할 때를 대비해서 createdCategoryId 저장해두기
-    // TODO: API 연동
-    return {
-      categoryId: 100,
-      name: "child add test",
-      cnt: 0,
-      children: null,
-    };
+  const addNewChild = (category: ICategory, newCategory: ICategory) => {
+    if (category.categoryId === selectedCategoryId) {
+      category.children = category.children
+        ? [...category.children, newCategory]
+        : [newCategory];
+    } else if (category.children) {
+      category.children = category.children.map((category) =>
+        addNewChild(category, newCategory)
+      );
+    }
+    return category;
   };
 
   /**
    * 선택한 카테고리의 하위에 새로운 카테고리를 생성
    */
   const handleClickPlus = () => {
-    const newCategory = createNewCategory();
-    const addNewChild = (category: ICategory) => {
-      if (category.children === null) {
-        if (category.categoryId === selectedCategoryId) {
-          category.children = [newCategory];
-        }
-      } else {
-        if (category.categoryId === selectedCategoryId) {
-          category.children.push(newCategory);
-        } else {
-          category.children = category.children.map((category) =>
-            addNewChild(category)
-          );
-        }
-      }
-
-      return category;
+    const newCategory = {
+      categoryId: Number(new Date()),
+      name: "new category",
+      cnt: 0,
+      children: null,
     };
-
-    const newCategoryData = categoryData.map((category) =>
-      addNewChild(category)
+    setCreatedCategories((prev) => [
+      ...prev,
+      { parentId: selectedCategoryId, newCategory },
+    ]);
+    setCategoryData(
+      categoryData.map((category) => addNewChild(category, newCategory))
     );
-    setCategoryData(newCategoryData);
   };
 
   /**
@@ -194,7 +191,18 @@ export function EditCategory({ setEditCategory }: EditCategoryProps) {
     }
   };
 
-  const handleSubmit = () => {};
+  const handleSubmit = async () => {
+    if (isEditingCategoryName) return;
+    // 카테고리 생성
+    const res = await postCategories(createdCategories);
+    console.log("postCategory res", res);
+    // 서비스콜 완료 후 카테고리 상태를 최신으로 업데이트
+    queryClient.invalidateQueries({ queryKey: QUERY_KEY.blog.category.list() });
+    // 로컬의 카테고리 수정용 상태값들을 초기화
+    setCreatedCategories([]);
+    // 카테고리 수정창 닫기
+    setEditCategory(false);
+  };
 
   /**
    * 카테고리 목록을 받아 JSX를 반환
@@ -259,6 +267,8 @@ export function EditCategory({ setEditCategory }: EditCategoryProps) {
       );
     });
 
+  const { mutateAsync: postCategories } = usePostCategoryList();
+
   return (
     <CategoryWrapperEditForm onSubmit={handleSubmit}>
       <FlexDiv $gap={3}>
@@ -267,8 +277,8 @@ export function EditCategory({ setEditCategory }: EditCategoryProps) {
           $bold={true}
           size={0.75}
           $pointer={true}
-          onClick={() => setEditCategory(false)}
-          // onClick={() => isEditingCategoryName || setType("register")}
+          as="button"
+          type="submit"
         >
           완료
         </Text>
