@@ -6,3 +6,8 @@ export interface ICategory {
   cnt: number;
   children: ICategory[] | null;
 }
+
+export interface IPostCategory {
+  parentId: number;
+  newCategory: ICategory;
+}
