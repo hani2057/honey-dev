@@ -1,9 +1,10 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, Suspense, lazy } from "react";
 
-import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
 import { MDEditorWrapper } from "./style";
+
+const QuillEditor = lazy(() => import("react-quill"));
 
 interface MDEditorProps {
   width?: number;
@@ -22,8 +23,6 @@ export const MDEditor = ({
   value,
   setValue,
 }: MDEditorProps) => {
-  // const [value, setValue] = useState("");
-
   const modules = {
     toolbar: [
       [{ header: [1, 2, 3, false] }],
@@ -58,20 +57,22 @@ export const MDEditor = ({
   ];
 
   return (
-    <MDEditorWrapper
-      width={width}
-      height={height}
-      pWidth={pWidth}
-      pHeight={pHeight}
-    >
-      <ReactQuill
-        theme="snow"
-        value={value}
-        onChange={setValue}
-        modules={modules}
-        formats={formats}
-        style={{ height: "calc(100% - 2.5rem - 2px" }}
-      />
-    </MDEditorWrapper>
+    <Suspense fallback={<div>Loading...</div>}>
+      <MDEditorWrapper
+        width={width}
+        height={height}
+        pWidth={pWidth}
+        pHeight={pHeight}
+      >
+        <QuillEditor
+          theme="snow"
+          value={value}
+          onChange={setValue}
+          modules={modules}
+          formats={formats}
+          style={{ height: "calc(100% - 2.5rem - 2px" }}
+        />
+      </MDEditorWrapper>
+    </Suspense>
   );
 };
