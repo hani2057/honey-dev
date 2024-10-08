@@ -1,10 +1,12 @@
-import { forwardRef } from "react";
+import { Suspense, forwardRef, lazy } from "react";
 
 import { ChangeHandler } from "react-hook-form";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
 import { MDEditorWrapper } from "./style";
+
+const QuillEditor = lazy(() => import("react-quill"));
 
 interface MDEditorProps {
   width?: number;
@@ -62,21 +64,23 @@ export const MDEditor = forwardRef<ReactQuill, MDEditorProps>(
     };
 
     return (
-      <MDEditorWrapper
-        width={width}
-        height={height}
-        pWidth={pWidth}
-        pHeight={pHeight}
-      >
-        <ReactQuill
-          ref={ref}
-          theme="snow"
-          onChange={handleOnChange}
-          modules={modules}
-          formats={formats}
-          style={{ height: "calc(100% - 2.5rem - 2px" }}
-        />
-      </MDEditorWrapper>
+      <Suspense fallback={<div>Loading...</div>}>
+        <MDEditorWrapper
+          width={width}
+          height={height}
+          pWidth={pWidth}
+          pHeight={pHeight}
+        >
+          <QuillEditor
+            ref={ref}
+            theme="snow"
+            onChange={handleOnChange}
+            modules={modules}
+            formats={formats}
+            style={{ height: "calc(100% - 2.5rem - 2px" }}
+          />
+        </MDEditorWrapper>
+      </Suspense>
     );
   }
 );
