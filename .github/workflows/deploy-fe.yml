@@ -23,7 +23,9 @@ jobs:
           cache: "pnpm" # pnpm 캐시 설정
 
       - name: Install pnpm
-        run: npm install -g pnpm # pnpm 설치
+        run: |
+          npm install -g pnpm # pnpm 설치
+          echo $PATH # PATH 환경 변수 출력
 
       - name: Install dependencies
         run: pnpm install # 의존성 설치
